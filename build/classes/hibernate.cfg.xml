@@ -41,6 +41,8 @@ Contributor(s):
 -->
 <hibernate-configuration>
   <session-factory>
-
-    </session-factory>
+    <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+    <property name="hibernate.connection.url">jdbc:sqlserver://servagilus.dyndns.org:1433;databaseName=dbComandaBalada</property>
+    <property name="hibernate.connection.username">claudio</property>
+  </session-factory>
 </hibernate-configuration>
