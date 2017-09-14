@@ -17,6 +17,12 @@ public class Cliente {
     private String telefone;
     private double valorAcumulado;
 
+    //construtor vazio
+    public Cliente()
+    {
+        
+    }
+    
     public Cliente(int id, String nome, String cpf, String telefone, float valorAcumulado) {
         this.id = id;
         this.nome = nome;

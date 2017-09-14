@@ -41,10 +41,12 @@ Contributor(s):
 -->
 <hibernate-configuration>
   <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
     <property name="hibernate.connection.url">jdbc:sqlserver://servagilus.dyndns.org:1433;databaseName=dbComandaBalada</property>
     <property name="hibernate.connection.username">claudio</property>
+    <property name="hibernate.connection.password">op@58523</property>
     <property name="hibernate.show_sql">true</property>
-    <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
-  </session-factory>
+    <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>a
+  <mapping resource="comandabalada/hibernate.hbm.xml"/></session-factory>
 </hibernate-configuration>
