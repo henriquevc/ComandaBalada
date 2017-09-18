@@ -37,13 +37,17 @@
                       <Component id="lblValorAcumulado" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="lblTelefone" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="lblId" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="tfCpf" max="32767" attributes="0"/>
-                  <Component id="tfNome" alignment="0" pref="178" max="32767" attributes="0"/>
-                  <Component id="tfTelefone" alignment="1" max="32767" attributes="0"/>
-                  <Component id="tfValorAcumulado" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Component id="tfCpf" max="32767" attributes="0"/>
+                      <Component id="tfNome" alignment="0" pref="178" max="32767" attributes="0"/>
+                      <Component id="tfTelefone" alignment="1" max="32767" attributes="0"/>
+                      <Component id="tfValorAcumulado" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="tfId" min="-2" pref="35" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -52,29 +56,34 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblCpf" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblId" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfId" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="tfCpf" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblCpf" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblNome" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfNome" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblNome" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lblValorAcumulado" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfValorAcumulado" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblValorAcumulado" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnSalvar" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
+              <EmptySpace pref="46" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -92,6 +101,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tfCpfFocusLost"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfCpfActionPerformed"/>
       </Events>
     </Component>
@@ -134,13 +144,26 @@
     <Component class="javax.swing.JFormattedTextField" name="tfValorAcumulado">
       <Properties>
         <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format subtype="0" type="0"/>
+          <Format format="#,###.00" subtype="-1" type="0"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfValorAcumuladoActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblId">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Id:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfId">
+      <Properties>
+        <Property name="editable" type="boolean" value="false"/>
+        <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="99" green="99" red="99" type="rgb"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

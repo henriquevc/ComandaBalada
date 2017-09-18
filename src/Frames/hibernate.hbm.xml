@@ -40,5 +40,5 @@ made subject to such option by the copyright holder.
 Contributor(s):
 -->
 <hibernate-mapping>
-  <class name="comandabalada.Cliente" table="cliente"/>
+  <class name="Classes.Cliente" table="cliente"/>
 </hibernate-mapping>

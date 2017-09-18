@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package comandabalada;
+package Frames;
 
 /**
  *
@@ -30,6 +30,7 @@ public class PainelPrincipal extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -40,7 +41,7 @@ public class PainelPrincipal extends javax.swing.JPanel {
         jButton2.setBackground(new java.awt.Color(0, 150, 136));
         jButton2.setFont(new java.awt.Font("Segoe UI Emoji", 0, 11)); // NOI18N
         jButton2.setForeground(new java.awt.Color(0, 150, 136));
-        jButton2.setText("Fechar Comanda");
+        jButton2.setText("Cadastrar Produto");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -51,18 +52,30 @@ public class PainelPrincipal extends javax.swing.JPanel {
         jButton3.setForeground(new java.awt.Color(0, 150, 136));
         jButton3.setText("Cadastrar Cliente");
 
+        jButton4.setBackground(new java.awt.Color(0, 150, 136));
+        jButton4.setFont(new java.awt.Font("Segoe UI Emoji", 0, 11)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(0, 150, 136));
+        jButton4.setText("Fechar Comanda");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(91, 91, 91)
+                .addGap(34, 34, 34)
                 .addComponent(jButton3)
-                .addGap(81, 81, 81)
+                .addGap(38, 38, 38)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
+                .addGap(44, 44, 44)
+                .addComponent(jButton4)
+                .addGap(42, 42, 42)
                 .addComponent(jButton2)
-                .addGap(90, 90, 90))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -71,6 +84,7 @@ public class PainelPrincipal extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(129, Short.MAX_VALUE))
         );
@@ -80,10 +94,15 @@ public class PainelPrincipal extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     // End of variables declaration//GEN-END:variables
 }

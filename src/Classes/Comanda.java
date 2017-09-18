@@ -3,20 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package comandabalada;
+package Classes;
 
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  *
  * @author Henrique
  */
-public class Comanda {
+@Entity
+@Table(name = "comanda")
+public class Comanda implements Serializable {
     
     private int id;
     private int clienteId;
     private int FechamentoComandaId;
     private List<ItemPedido> itensPedido;
+
+    public Comanda() {
+    }
 
     public Comanda(int id, int clienteId, int FechamentoComandaId, List<ItemPedido> itensPedido) {
         this.id = id;

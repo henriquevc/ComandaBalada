@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package comandabalada;
+package Frames;
 
+import DAO.ClienteDAO;
+import Classes.Cliente;
 import java.sql.SQLException;
-import java.util.Set;
+import java.text.DecimalFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,7 +26,7 @@ public class FrameCliente extends javax.swing.JFrame {
     }
     
     Cliente cliente = new Cliente();
-    AcessaDB aDB = new AcessaDB();
+    ClienteDAO clienteDAO = new ClienteDAO();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,6 +46,8 @@ public class FrameCliente extends javax.swing.JFrame {
         lblValorAcumulado = new javax.swing.JLabel();
         btnSalvar = new javax.swing.JButton();
         tfValorAcumulado = new javax.swing.JFormattedTextField();
+        lblId = new javax.swing.JLabel();
+        tfId = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,6 +58,11 @@ public class FrameCliente extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        tfCpf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfCpfFocusLost(evt);
+            }
+        });
         tfCpf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfCpfActionPerformed(evt);
@@ -85,13 +94,18 @@ public class FrameCliente extends javax.swing.JFrame {
             }
         });
 
-        tfValorAcumulado.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
+        tfValorAcumulado.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,###.00"))));
         tfValorAcumulado.setToolTipText("");
         tfValorAcumulado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tfValorAcumuladoActionPerformed(evt);
             }
         });
+
+        lblId.setText("Id:");
+
+        tfId.setEditable(false);
+        tfId.setDisabledTextColor(new java.awt.Color(153, 153, 153));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -108,37 +122,44 @@ public class FrameCliente extends javax.swing.JFrame {
                     .addComponent(lblCpf)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(lblValorAcumulado, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(lblTelefone)))
+                        .addComponent(lblTelefone))
+                    .addComponent(lblId))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(tfCpf)
-                    .addComponent(tfNome, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                    .addComponent(tfTelefone, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(tfValorAcumulado))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(tfCpf)
+                        .addComponent(tfNome, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                        .addComponent(tfTelefone, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(tfValorAcumulado))
+                    .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(56, 56, 56)
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCpf)
-                    .addComponent(tfCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblId)
+                    .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNome)
-                    .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCpf))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTelefone)
-                    .addComponent(tfTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNome))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblValorAcumulado)
-                    .addComponent(tfValorAcumulado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                    .addComponent(tfTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTelefone))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfValorAcumulado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblValorAcumulado))
+                .addGap(18, 18, 18)
                 .addComponent(btnSalvar)
-                .addGap(66, 66, 66))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
@@ -146,19 +167,31 @@ public class FrameCliente extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         // TODO add your handling code here:
+        
+        cliente.setId(Integer.parseInt(tfId.getText()));
         cliente.setNome(tfNome.getText());
         cliente.setCpf(tfCpf.getText());
         cliente.setTelefone(tfTelefone.getText());
-        cliente.setValorAcumulado(Float.parseFloat(tfValorAcumulado.getText()));
-        
+        String valoracumulado = tfValorAcumulado.getText().replace(".", "").replace(",", ".");
+        cliente.setValorAcumulado(Float.parseFloat(valoracumulado));
         try {
-            aDB.SalvarCliente(cliente);
+            clienteDAO.Salvar(cliente);
         } catch (SQLException ex) {
             Logger.getLogger(FrameCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_btnSalvarActionPerformed
-
+    public String formatarFloat(String numero){
+        float numeroF = Float.parseFloat(numero);
+        String retorno = "";
+        DecimalFormat formatter = new DecimalFormat("#.00");
+        try{
+          retorno = formatter.format(numeroF);
+        }catch(Exception ex){
+          System.err.println("Erro ao formatar numero: " + ex);
+        }
+        return retorno;
+    }
     private void tfCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfCpfActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfCpfActionPerformed
@@ -166,6 +199,19 @@ public class FrameCliente extends javax.swing.JFrame {
     private void tfTelefoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfTelefoneActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfTelefoneActionPerformed
+
+    private void tfCpfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfCpfFocusLost
+        try {
+            // TODO add your handling code here:
+            Cliente cli = clienteDAO.BuscaCPF(tfCpf.getText());
+            tfId.setText(String.valueOf(cli.getId()));
+            tfNome.setText(cli.getNome());
+            tfTelefone.setText(cli.getTelefone());
+            tfValorAcumulado.setText(formatarFloat(String.valueOf(cli.getValorAcumulado())).replace(".", ","));
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tfCpfFocusLost
 
     private void tfValorAcumuladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfValorAcumuladoActionPerformed
         // TODO add your handling code here:
@@ -211,10 +257,12 @@ public class FrameCliente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel lblCpf;
+    private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblTelefone;
     private javax.swing.JLabel lblValorAcumulado;
     private javax.swing.JFormattedTextField tfCpf;
+    private javax.swing.JTextField tfId;
     private javax.swing.JTextField tfNome;
     private javax.swing.JFormattedTextField tfTelefone;
     private javax.swing.JFormattedTextField tfValorAcumulado;

@@ -3,20 +3,39 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package comandabalada;
+package Classes;
+
+import java.io.Serializable;
+import java.sql.SQLException;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Henrique
  */
-public class Cliente {
+@Entity
+@Table(name = "cliente")
+public class Cliente implements Serializable {
     
+    private static final long serialVersionUID = 1L;
+    
+    @Id 
+    @GeneratedValue
     private int id;
+    @Column
     private String nome;
+    @Column
     private String cpf;
+    @Column
     private String telefone;
-    private double valorAcumulado;
-
+    @Column
+    private float valorAcumulado;
+    
     //construtor vazio
     public Cliente()
     {
@@ -70,4 +89,6 @@ public class Cliente {
     public void setValorAcumulado(float valorAcumulado) {
         this.valorAcumulado = valorAcumulado;
     }
+    
+
 }
