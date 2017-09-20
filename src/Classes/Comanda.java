@@ -5,18 +5,13 @@
  */
 package Classes;
 
-import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
 /**
  *
  * @author Henrique
  */
-@Entity
-@Table(name = "comanda")
-public class Comanda implements Serializable {
+public class Comanda {
     
     private int id;
     private int clienteId;

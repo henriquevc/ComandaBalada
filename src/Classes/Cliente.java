@@ -5,40 +5,19 @@
  */
 package Classes;
 
-import java.io.Serializable;
-import java.sql.SQLException;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author Henrique
  */
-@Entity
-@Table(name = "cliente")
-public class Cliente implements Serializable {
+public class Cliente {
     
-    private static final long serialVersionUID = 1L;
-    
-    @Id 
-    @GeneratedValue
     private int id;
-    @Column
     private String nome;
-    @Column
     private String cpf;
-    @Column
     private String telefone;
-    @Column
     private float valorAcumulado;
     
-    //construtor vazio
-    public Cliente()
-    {
+    public Cliente() {
         
     }
     
@@ -49,6 +28,8 @@ public class Cliente implements Serializable {
         this.telefone = telefone;
         this.valorAcumulado = valorAcumulado;
     }
+
+
     
     public int getId() {
         return id;

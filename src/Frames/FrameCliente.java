@@ -7,6 +7,8 @@ package Frames;
 
 import DAO.ClienteDAO;
 import Classes.Cliente;
+import Classes.Comanda;
+import DAO.ComandaDAO;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
@@ -26,8 +28,9 @@ public class FrameCliente extends javax.swing.JFrame {
     }
     
     Cliente cliente = new Cliente();
+    Comanda comanda = new Comanda();
     ClienteDAO clienteDAO = new ClienteDAO();
-
+    ComandaDAO comandaDAO = new ComandaDAO();
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -175,7 +178,10 @@ public class FrameCliente extends javax.swing.JFrame {
         String valoracumulado = tfValorAcumulado.getText().replace(".", "").replace(",", ".");
         cliente.setValorAcumulado(Float.parseFloat(valoracumulado));
         try {
-            clienteDAO.Salvar(cliente);
+            int idCliente = clienteDAO.Salvar(cliente);
+            comanda.setClienteId(idCliente);
+            comandaDAO.Incluir(comanda);
+
         } catch (SQLException ex) {
             Logger.getLogger(FrameCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -216,11 +222,7 @@ public class FrameCliente extends javax.swing.JFrame {
     private void tfValorAcumuladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfValorAcumuladoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfValorAcumuladoActionPerformed
-
     
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -253,6 +255,8 @@ public class FrameCliente extends javax.swing.JFrame {
             }
         });
     }
+    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSalvar;

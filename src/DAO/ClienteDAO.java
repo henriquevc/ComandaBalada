@@ -26,27 +26,37 @@ public class ClienteDAO {
         this.conexao = AcessaDB.getConnection();
     }
     
-    public void Salvar (Cliente cli) throws SQLException{
+    public int Salvar (Cliente cli) throws SQLException{
+        int idCliente = 0;
         if (cli.getId() == 0)
-            Incluir(cli);
-        else
+            idCliente = Incluir(cli);
+        else{
             Alterar(cli);
+            idCliente = cli.getId();
+        }
+        return idCliente;
     }
-    public void Incluir (Cliente cli) throws SQLException{
+    public int Incluir (Cliente cli) throws SQLException{
         stmt = conexao.createStatement();
         
         sql = "INSERT INTO cliente values ('" + cli.getNome() + "','"
                                               + cli.getCpf() + "','"
                                               + cli.getTelefone()+ "',"
-                                              + cli.getValorAcumulado() + ")";
+                                              + cli.getValorAcumulado() + ") select @@identity idGerado";
+        int idCliente = 0;
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()){
+            idCliente = rs.getInt("idGerado");
+        }
         
-        if(stmt.executeUpdate(sql) > 0){
+        if( idCliente > 0 ){
             JOptionPane.showMessageDialog(null, "Dados do cliente inseridos com sucesso!");
         }
         else
         {
             JOptionPane.showMessageDialog(null, "ERRO ao gravar no Banco", "ERRO", 0);
         }
+        return idCliente;
     }
     
     public void Alterar (Cliente cliente) throws SQLException{
@@ -58,6 +68,7 @@ public class ClienteDAO {
                                          + "valoracumulado = " + cliente.getValorAcumulado()
                           + " where id = %d", cliente.getNome(), cliente.getCpf(), cliente.getTelefone(), cliente.getId());
         //converter o float para double (, para .)
+
         
         if(stmt.executeUpdate(sql) > 0){
             JOptionPane.showMessageDialog(null, "Dados do cliente alterados com sucesso!");
