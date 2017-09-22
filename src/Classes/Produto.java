@@ -13,9 +13,9 @@ public class Produto {
     
     private int id;
     private String Nome;
-    private double valor;
+    private float valor;
 
-    public Produto(int id, String Nome, double valor) {
+    public Produto(int id, String Nome, float valor) {
         this.id = id;
         this.Nome = Nome;
         this.valor = valor;
@@ -45,7 +45,7 @@ public class Produto {
         return valor;
     }
 
-    public void setValor(double valor) {
+    public void setValor(float valor) {
         this.valor = valor;
     }
     

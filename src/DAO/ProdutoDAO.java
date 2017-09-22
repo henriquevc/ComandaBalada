@@ -7,9 +7,12 @@ package DAO;
 
 import Classes.Produto;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,12 +28,32 @@ public class ProdutoDAO {
         this.conexao = AcessaDB.getConnection();
     }
     
-    public void Incluir(Produto prod){
+    public void Incluir(Produto prod) throws SQLException{
+        stmt = conexao.createStatement();
         
+        sql = "INSERT INTO PRODUTO VALUES ('" + prod.getNome() + "', " + prod.getValor() + ") ";
+        
+        if (stmt.executeUpdate(sql) > 0)
+            JOptionPane.showMessageDialog(null, "Dados do produto inseridos com sucesso!");
+        else
+            JOptionPane.showMessageDialog(null, "ERRO ao gravar no Banco", "ERRO", 0);
+            
     }
     
-    public void Alterar (Produto prod){
-    
+    public void Alterar (Produto prod) throws SQLException{
+        stmt = conexao.createStatement();
+        
+        sql = "update produto set nome = '" + prod.getNome() + "',"
+                              + " Valor = " + prod.getValor()
+           + " where id = " + prod.getId();
+        
+        if(stmt.executeUpdate(sql) > 0){
+            JOptionPane.showMessageDialog(null, "Dados do produto alterado com sucesso!");
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "ERRO ao gravar no Banco", "ERRO", 0);
+        }
     }
     
     public void Excluir (Produto prod){
@@ -41,8 +64,19 @@ public class ProdutoDAO {
         return new Produto();
     }
     
-    public List<Produto> Listar (Produto prod){
+    public List<Produto> Listar () throws SQLException{
         ArrayList listProd = new ArrayList<>();
+        stmt = conexao.createStatement();
+        sql = "select * from produto";
+        
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()){
+            Produto p = new Produto();
+            p.setNome(rs.getString("nome"));
+            p.setValor(rs.getFloat("valor"));
+            p.setId(rs.getInt("id"));
+            listProd.add(p);
+        }
         
         return listProd;
     }
