@@ -5,6 +5,8 @@
  */
 package Frames;
 
+import java.awt.Color;
+
 /**
  *
  * @author Henrique
@@ -16,6 +18,7 @@ public class FramePrincipal extends javax.swing.JFrame {
      */
     public FramePrincipal() {
         initComponents();
+        this.getContentPane().setBackground(new Color(250, 250, 250));
     }
 
     /**
@@ -27,43 +30,50 @@ public class FramePrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnCadastrarCliente = new javax.swing.JButton();
+        btnRegistrarPedido = new javax.swing.JButton();
+        btnFecharComanda = new javax.swing.JButton();
+        btnCadastrarProduto = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 0, 0));
+        setForeground(java.awt.Color.white);
 
-        jButton3.setBackground(new java.awt.Color(0, 150, 136));
-        jButton3.setForeground(new java.awt.Color(0, 150, 136));
-        jButton3.setText("Cadastrar Cliente");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnCadastrarCliente.setBackground(new java.awt.Color(0, 150, 136));
+        btnCadastrarCliente.setForeground(new java.awt.Color(255, 255, 255));
+        btnCadastrarCliente.setText("Cadastrar Cliente");
+        btnCadastrarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnCadastrarClienteActionPerformed(evt);
             }
         });
 
-        jButton1.setBackground(new java.awt.Color(0, 150, 136));
-        jButton1.setForeground(new java.awt.Color(0, 150, 136));
-        jButton1.setText("Registrar Pedido");
-
-        jButton4.setBackground(new java.awt.Color(0, 150, 136));
-        jButton4.setFont(new java.awt.Font("Segoe UI Emoji", 0, 11)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(0, 150, 136));
-        jButton4.setText("Fechar Comanda");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrarPedido.setBackground(new java.awt.Color(0, 150, 136));
+        btnRegistrarPedido.setForeground(new java.awt.Color(255, 255, 255));
+        btnRegistrarPedido.setText("Registrar Pedido");
+        btnRegistrarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnRegistrarPedidoActionPerformed(evt);
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(0, 150, 136));
-        jButton2.setFont(new java.awt.Font("Segoe UI Emoji", 0, 11)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(0, 150, 136));
-        jButton2.setText("Cadastrar Produto");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnFecharComanda.setBackground(new java.awt.Color(0, 150, 136));
+        btnFecharComanda.setFont(new java.awt.Font("Segoe UI Emoji", 0, 11)); // NOI18N
+        btnFecharComanda.setForeground(new java.awt.Color(255, 255, 255));
+        btnFecharComanda.setText("Fechar Comanda");
+        btnFecharComanda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnFecharComandaActionPerformed(evt);
+            }
+        });
+
+        btnCadastrarProduto.setBackground(new java.awt.Color(0, 150, 136));
+        btnCadastrarProduto.setFont(new java.awt.Font("Segoe UI Emoji", 0, 11)); // NOI18N
+        btnCadastrarProduto.setForeground(new java.awt.Color(255, 255, 255));
+        btnCadastrarProduto.setText("Cadastrar Produto");
+        btnCadastrarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadastrarProdutoActionPerformed(evt);
             }
         });
 
@@ -72,43 +82,51 @@ public class FramePrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jButton3)
-                .addGap(38, 38, 38)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
-                .addComponent(jButton4)
-                .addGap(42, 42, 42)
-                .addComponent(jButton2)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(85, 85, 85)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnFecharComanda, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(btnCadastrarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(136, 136, 136)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnRegistrarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCadastrarProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(117, 117, 117)
+                .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(131, Short.MAX_VALUE))
+                    .addComponent(btnCadastrarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRegistrarPedido, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCadastrarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFecharComanda, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(65, 65, 65))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnFecharComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharComandaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnFecharComandaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnCadastrarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarProdutoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        new FrameProduto().setVisible(true);
+    }//GEN-LAST:event_btnCadastrarProdutoActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnCadastrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarClienteActionPerformed
         // TODO add your handling code here:
         new FrameCliente().setVisible(true);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnCadastrarClienteActionPerformed
+
+    private void btnRegistrarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPedidoActionPerformed
+        // TODO add your handling code here:
+        new FrameRegistrarPedido().setVisible(true);
+    }//GEN-LAST:event_btnRegistrarPedidoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,9 +165,9 @@ public class FramePrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton btnCadastrarCliente;
+    private javax.swing.JButton btnCadastrarProduto;
+    private javax.swing.JButton btnFecharComanda;
+    private javax.swing.JButton btnRegistrarPedido;
     // End of variables declaration//GEN-END:variables
 }

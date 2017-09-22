@@ -20,6 +20,10 @@ public class Produto {
         this.Nome = Nome;
         this.valor = valor;
     }
+
+    public Produto() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     public int getId() {
         return id;

@@ -5,7 +5,6 @@
  */
 package DAO;
 
-import Classes.Cliente;
 import Classes.Comanda;
 import java.sql.Connection;
 import java.sql.ResultSet;
