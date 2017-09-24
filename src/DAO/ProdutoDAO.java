@@ -56,12 +56,34 @@ public class ProdutoDAO {
         }
     }
     
-    public void Excluir (Produto prod){
+    public void Excluir (int produtoId) throws SQLException{
+        stmt = conexao.createStatement();
         
+        sql = "delete produto where id = " + produtoId;
+        
+        if(stmt.executeUpdate(sql) > 0 ){
+           JOptionPane.showMessageDialog(null, "produto excluido com sucesso!"); 
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "ERRO ao excluir o produto, talvez possua dependecias", "ERRO", 0);
+        }
     }
     
-    public Produto Buscar (String prodDescricao){
-        return new Produto();
+    public Produto Buscar (String prodDescricao) throws SQLException{
+        
+        stmt = conexao.createStatement();
+        
+        sql = "select * from produto where nome like '%" + prodDescricao + "%'";
+        
+        ResultSet rs = stmt.executeQuery(sql);
+        Produto produto = new Produto();
+        while (rs.next()){
+            produto.setId(rs.getInt("id"));
+            produto.setNome(rs.getString("nome"));
+            produto.setValor(rs.getFloat("valor"));
+        }
+        return produto;
     }
     
     public List<Produto> Listar () throws SQLException{

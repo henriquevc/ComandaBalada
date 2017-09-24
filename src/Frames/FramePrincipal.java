@@ -70,7 +70,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         btnCadastrarProduto.setBackground(new java.awt.Color(0, 150, 136));
         btnCadastrarProduto.setFont(new java.awt.Font("Segoe UI Emoji", 0, 11)); // NOI18N
         btnCadastrarProduto.setForeground(new java.awt.Color(255, 255, 255));
-        btnCadastrarProduto.setText("Cadastrar Produto");
+        btnCadastrarProduto.setText("Produto");
         btnCadastrarProduto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrarProdutoActionPerformed(evt);
