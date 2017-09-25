@@ -52,8 +52,6 @@ public class FrameCliente extends javax.swing.JFrame {
         lblId = new javax.swing.JLabel();
         tfId = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         lblCpf.setText("CPF:");
 
         try {

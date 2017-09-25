@@ -98,6 +98,17 @@ public class ClienteDAO {
         return cliente;
     }
     
+    public String BuscarNomeCliente (int id) throws SQLException {
+        stmt = conexao.createStatement();
+        sql = "select Nome from cliente where id = " + id;
+        ResultSet rs = stmt.executeQuery(sql);
+        String nome = "";
+        while (rs.next()){
+            nome = rs.getString("nome");
+        }
+        return nome;
+    }
+    
     public void Excluir (int id) throws SQLException {
         stmt = conexao.createStatement();
         

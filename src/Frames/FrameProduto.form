@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
-  <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
-  </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
@@ -50,10 +47,8 @@
                   </Group>
                   <Component id="tfBuscar" min="-2" pref="256" max="-2" attributes="0"/>
                   <Component id="tfId" min="-2" pref="153" max="-2" attributes="0"/>
-                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="tfValor" alignment="0" max="32767" attributes="0"/>
-                      <Component id="tfNome" alignment="0" pref="153" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="tfValor" alignment="0" max="32767" attributes="0"/>
+                  <Component id="tfNome" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="btnListar" min="-2" max="-2" attributes="0"/>

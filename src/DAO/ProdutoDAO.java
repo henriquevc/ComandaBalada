@@ -86,20 +86,44 @@ public class ProdutoDAO {
         return produto;
     }
     
-    public List<Produto> Listar () throws SQLException{
-        ArrayList listProd = new ArrayList<>();
+    public String BuscarNomeProduto (int produtoId) throws SQLException {
         stmt = conexao.createStatement();
-        sql = "select * from produto";
         
+        sql = "select nome from produto where id = " + produtoId;
+        String nomeProduto = "";
         ResultSet rs = stmt.executeQuery(sql);
+        
         while(rs.next()){
-            Produto p = new Produto();
-            p.setNome(rs.getString("nome"));
-            p.setValor(rs.getFloat("valor"));
-            p.setId(rs.getInt("id"));
-            listProd.add(p);
+            nomeProduto = rs.getString("nome");
         }
         
-        return listProd;
+        return nomeProduto;
+    }
+    
+    public Produto Buscar (int produtoId) throws SQLException{
+        stmt = conexao.createStatement();
+        
+        sql = "select * from produto where id = " + produtoId;
+        Produto prod = new Produto();
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()){
+            prod.setId(rs.getInt("id"));
+            prod.setNome(rs.getString("nome"));
+            prod.setValor(rs.getFloat("valor"));
+        }
+        
+        return prod;
+    }
+    
+    public List<String> Listar () throws SQLException {
+        ArrayList<String> listProdutos = new ArrayList<>();
+        stmt = conexao.createStatement();
+        sql = "select * from produto";
+        String[] produtos;
+        ResultSet rs = stmt.executeQuery(sql);
+        while(rs.next()){
+            listProdutos.add(rs.getString("nome"));
+        }
+        return listProdutos;
     }
 }

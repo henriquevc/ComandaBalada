@@ -6,10 +6,12 @@
 package DAO;
 
 import Classes.Comanda;
+import Classes.ItemPedido;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -69,7 +71,7 @@ public class ComandaDAO {
         ResultSet rs = stmt.executeQuery(sql);
         
         while(rs.next()) {
-            cmd.setClienteId(rs.getInt("Id"));
+            cmd.setId(rs.getInt("Id"));
             cmd.setClienteId(rs.getInt("ClienteId"));
             cmd.setFechamentoComandaId(rs.getInt("FechamentoComandaId"));
         }
@@ -89,6 +91,23 @@ public class ComandaDAO {
         {
             JOptionPane.showMessageDialog(null, "ERRO ao gravar no Banco", "ERRO", 0);
         }
+    }
+    
+    public ArrayList<ItemPedido> ListarPedidos (int comandaId) throws SQLException {
+        stmt = conexao.createStatement();
+        sql = "select * from ItemPedido where comandaId = " + comandaId;
+        
+        ResultSet rs = stmt.executeQuery(sql);
+        ArrayList<ItemPedido> itensPedido = new ArrayList();
+        while (rs.next()){
+            ItemPedido item = new ItemPedido();
+            item.setId(rs.getInt("Id"));
+            item.setProdutoId(rs.getInt("ProdutoId"));
+            item.setValor(rs.getDouble("Valor"));
+            itensPedido.add(item);
+        }
+        
+        return itensPedido;
     }
     
 }

@@ -49,8 +49,6 @@ public class FrameProduto extends javax.swing.JFrame {
         btnLimpar = new javax.swing.JButton();
         btnListar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         tfBuscar.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 tfBuscarFocusLost(evt);
@@ -126,9 +124,8 @@ public class FrameProduto extends javax.swing.JFrame {
                         .addComponent(btnLimpar))
                     .addComponent(tfBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(tfValor, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(tfNome, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)))
+                    .addComponent(tfValor)
+                    .addComponent(tfNome))
                 .addGap(30, 30, 30)
                 .addComponent(btnListar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))

@@ -5,6 +5,12 @@
  */
 package Frames;
 
+import DAO.PedidoDAO;
+import DAO.ProdutoDAO;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Henrique
@@ -16,6 +22,7 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
      */
     public FrameRegistrarPedido() {
         initComponents();
+        listarProdutos();
     }
 
     /**
@@ -27,36 +34,38 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        lblIdComanda = new javax.swing.JLabel();
+        tfIdComanda = new javax.swing.JTextField();
+        lblProduto = new javax.swing.JLabel();
+        jcbProdutos = new javax.swing.JComboBox<>();
+        tfQuantidade = new javax.swing.JTextField();
+        lblQuantidade = new javax.swing.JLabel();
+        btnRegistrar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        lblIdComanda.setText("ID da Comanda: ");
 
-        jLabel1.setText("ID da Comanda: ");
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        tfIdComanda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                tfIdComandaActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Produto:");
+        lblProduto.setText("Produto:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jcbProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jcbProdutosActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Quantidade:");
+        lblQuantidade.setText("Quantidade:");
 
-        jButton1.setText("Registrar");
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,17 +76,17 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(72, 72, 72)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3))
+                            .addComponent(lblProduto)
+                            .addComponent(lblIdComanda)
+                            .addComponent(lblQuantidade))
                         .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField1)
-                            .addComponent(jComboBox1, 0, 155, Short.MAX_VALUE)))
+                            .addComponent(tfQuantidade)
+                            .addComponent(tfIdComanda)
+                            .addComponent(jcbProdutos, 0, 155, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(161, 161, 161)
-                        .addComponent(jButton1)))
+                        .addComponent(btnRegistrar)))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -85,31 +94,54 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(71, 71, 71)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblIdComanda)
+                    .addComponent(tfIdComanda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblProduto)
+                    .addComponent(jcbProdutos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(tfQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblQuantidade))
                 .addGap(42, 42, 42)
-                .addComponent(jButton1)
+                .addComponent(btnRegistrar)
                 .addContainerGap(44, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void listarProdutos (){
+        ProdutoDAO acessaProduto = new ProdutoDAO();
+        try {
+            for(String produto : acessaProduto.Listar()){
+                jcbProdutos.addItem(produto);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameRegistrarPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void tfIdComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfIdComandaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_tfIdComandaActionPerformed
+    
+    private void jcbProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbProdutosActionPerformed
+        // TODO add your handling code here:        
+    }//GEN-LAST:event_jcbProdutosActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+        int comandaId = Integer.parseInt(tfIdComanda.getText());
+        String produtoSelecionado = jcbProdutos.getSelectedItem().toString();
+        int quantidade = Integer.parseInt(tfQuantidade.getText());
+        PedidoDAO pedido = new PedidoDAO();
+        try {
+            pedido.registraPedido(comandaId, produtoSelecionado, quantidade);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameRegistrarPedido.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,12 +179,12 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JComboBox<String> jcbProdutos;
+    private javax.swing.JLabel lblIdComanda;
+    private javax.swing.JLabel lblProduto;
+    private javax.swing.JLabel lblQuantidade;
+    private javax.swing.JTextField tfIdComanda;
+    private javax.swing.JTextField tfQuantidade;
     // End of variables declaration//GEN-END:variables
 }

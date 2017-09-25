@@ -22,6 +22,9 @@ public class ItemPedido {
         this.valor = valor;
     }
 
+    public ItemPedido() {
+    }
+
     public int getId() {
         return id;
     }
