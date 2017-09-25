@@ -17,15 +17,17 @@ public class Comanda {
     private int clienteId;
     private int FechamentoComandaId;
     private List<ItemPedido> itensPedido;
+    private String data;
 
     public Comanda() {
     }
 
-    public Comanda(int id, int clienteId, int FechamentoComandaId, List<ItemPedido> itensPedido) {
+    public Comanda(int id, int clienteId, int FechamentoComandaId, List<ItemPedido> itensPedido, String data) {
         this.id = id;
         this.clienteId = clienteId;
         this.FechamentoComandaId = FechamentoComandaId;
         this.itensPedido = itensPedido;
+        this.data = data;
     }
     
     public int getId() {
@@ -58,6 +60,14 @@ public class Comanda {
 
     public void setItensPedido(List<ItemPedido> itensPedido) {
         this.itensPedido = itensPedido;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
     
     

@@ -6,11 +6,14 @@
 package DAO;
 
 import Classes.Comanda;
+import Classes.ComandaRelatorio;
 import Classes.ItemPedido;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -31,7 +34,10 @@ public class ComandaDAO {
         
         stmt = conexao.createStatement();
         int comandaId = 0;
-        sql = "INSERT INTO comanda values (" + cmd.getClienteId() + ", null) select @@identity comandaId";
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        String data = dtf.format(LocalDate.now());
+        
+        sql = "INSERT INTO comanda values (" + cmd.getClienteId() + ", null, '" + data + "') select @@identity comandaId";
         ResultSet rs = stmt.executeQuery(sql);
         while(rs.next()){
             comandaId = rs.getInt("comandaId");
@@ -110,4 +116,24 @@ public class ComandaDAO {
         return itensPedido;
     }
     
+    
+    public ArrayList<ComandaRelatorio> ListarComandasPorData (String data) throws SQLException {
+        ArrayList<ComandaRelatorio> lista = new ArrayList();
+        stmt = conexao.createStatement();
+        sql = "select co.Id, cl.Nome, sum(ip.Valor) ValorTotal "
+            + "from comanda co "
+            + "join cliente cl on cl.Id = co.ClienteId "
+            + "join itemPedido ip on ip.ComandaId = co.Id "
+            + "where co.Data = '" + data + "' "
+            + "group by co.Id, cl.Nome";
+        
+        ResultSet rs = stmt.executeQuery(sql);   
+        while (rs.next()){
+            ComandaRelatorio cmdR = new ComandaRelatorio(rs.getInt("Id"), rs.getString("Nome"), rs.getFloat("ValorTotal"));
+            lista.add(cmdR);
+        }
+        return lista;
+    }
+    
 }
+

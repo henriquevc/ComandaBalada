@@ -11,10 +11,12 @@ import Classes.Produto;
 import DAO.ClienteDAO;
 import DAO.ComandaDAO;
 import DAO.ProdutoDAO;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,10 +27,11 @@ public class FrameComanda extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameComanda
+     * @throws java.sql.SQLException
      */
     public FrameComanda() throws SQLException {
+        this.getContentPane().setBackground(new Color(250, 250, 250));
         initComponents();
-        
     }
     
     ComandaDAO acessoComanda = new ComandaDAO();
@@ -142,8 +145,8 @@ public class FrameComanda extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lblPedidos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnFecharComanda)
                 .addContainerGap(39, Short.MAX_VALUE))
         );
@@ -159,7 +162,7 @@ public class FrameComanda extends javax.swing.JFrame {
             tfNomeCliente.setText(nomeCliente);
             CreateTable(comanda.getId());
         } catch (SQLException ex) {
-            Logger.getLogger(FrameComanda.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, ex.toString(), "ERRO", 0);
         }
     }//GEN-LAST:event_tfBuscaComandaFocusLost
 

@@ -7,6 +7,7 @@ package Frames;
 
 import Classes.Produto;
 import DAO.ProdutoDAO;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.Set;
@@ -22,7 +23,8 @@ public class FrameProduto extends javax.swing.JFrame {
     /**
      * Creates new form FrameProduto
      */
-    public FrameProduto() {
+    public FrameProduto() {            
+        this.getContentPane().setBackground(new Color(250, 250, 250));
         initComponents();
     }
     ProdutoDAO produtoAcesso = new ProdutoDAO();

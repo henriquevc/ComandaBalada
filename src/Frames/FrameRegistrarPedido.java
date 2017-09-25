@@ -7,6 +7,7 @@ package Frames;
 
 import DAO.PedidoDAO;
 import DAO.ProdutoDAO;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +22,7 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
      * Creates new form FrameRegistrarPedido
      */
     public FrameRegistrarPedido() {
+        this.getContentPane().setBackground(new Color(250, 250, 250));
         initComponents();
         listarProdutos();
     }

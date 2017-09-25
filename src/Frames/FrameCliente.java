@@ -9,6 +9,7 @@ import DAO.ClienteDAO;
 import Classes.Cliente;
 import Classes.Comanda;
 import DAO.ComandaDAO;
+import java.awt.Color;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.logging.Level;
@@ -24,6 +25,7 @@ public class FrameCliente extends javax.swing.JFrame {
      * Creates new form Cliente
      */
     public FrameCliente() {
+        this.getContentPane().setBackground(new Color(250, 250, 250));
         initComponents();
     }
     
