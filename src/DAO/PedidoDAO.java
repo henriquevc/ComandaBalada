@@ -27,11 +27,9 @@ public class PedidoDAO {
     public void registraPedido(int comandaId, String produtoSelecionado, int quantidade) throws SQLException {
         Produto produto = new ProdutoDAO().Buscar(produtoSelecionado);
         
-        double valor = produto.getValor() * quantidade;
-        
         stmt = conexao.createStatement();
         
-        sql = "insert into ItemPedido values (" + produto.getId() + "," + comandaId + "," + valor + ")";
+        sql = "insert into ItemPedido values (" + produto.getId() + "," + comandaId + "," + produto.getValor() + ", " + quantidade + ")";
         
         if(stmt.executeUpdate(sql) > 0)
             JOptionPane.showMessageDialog(null, "Pedido realizado com sucesso!");

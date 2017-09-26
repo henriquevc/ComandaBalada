@@ -42,12 +42,11 @@ public class FrameComanda extends javax.swing.JFrame {
         //Integer.parseInt(tfBuscaComanda.getText())
         ArrayList<ItemPedido> lista = acessoComanda.ListarPedidos(comandaId);
 
-        String col[] = { "Produto", "Valor", "Quantidade"};
+        String col[] = { "Produto", "Valor", "Quantidade", "Total"};
         DefaultTableModel tableModel = new DefaultTableModel(col, 0);
         for ( ItemPedido item : lista){
             Produto prod = acessoProduto.Buscar(item.getProdutoId());
-            int quantidade = (int) (item.getValor() / prod.getValor());
-            Object[] i = {acessoProduto.BuscarNomeProduto(item.getProdutoId()), item.getValor(), quantidade};  
+            Object[] i = {acessoProduto.BuscarNomeProduto(item.getProdutoId()), item.getValor(), item.getQuantidade(), item.getValor() * item.getQuantidade() };  
             tableModel.addRow(i);
         };
         jTable1.setModel(tableModel);
@@ -84,25 +83,12 @@ public class FrameComanda extends javax.swing.JFrame {
         lblPedidos.setText("Pedidos");
 
         btnFecharComanda.setText("Fechar Comanda");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
-            },
-            new String [] {
-                "Produto", "Valor", "Quantidade"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+        btnFecharComanda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharComandaActionPerformed(evt);
             }
         });
+
         jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -118,17 +104,15 @@ public class FrameComanda extends javax.swing.JFrame {
                             .addComponent(lblBuscaComanda))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfNomeCliente)
+                            .addComponent(tfNomeCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
                             .addComponent(tfBuscaComanda)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(176, 176, 176)
                         .addComponent(lblPedidos))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(134, 134, 134)
-                        .addComponent(btnFecharComanda)))
+                        .addComponent(btnFecharComanda))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -165,6 +149,10 @@ public class FrameComanda extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex.toString(), "ERRO", 0);
         }
     }//GEN-LAST:event_tfBuscaComandaFocusLost
+
+    private void btnFecharComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharComandaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFecharComandaActionPerformed
 
     /**
      * @param args the command line arguments

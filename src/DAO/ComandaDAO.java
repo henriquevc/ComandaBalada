@@ -110,6 +110,7 @@ public class ComandaDAO {
             item.setId(rs.getInt("Id"));
             item.setProdutoId(rs.getInt("ProdutoId"));
             item.setValor(rs.getDouble("Valor"));
+            item.setQuantidade(rs.getInt("quantidade"));
             itensPedido.add(item);
         }
         
@@ -120,7 +121,7 @@ public class ComandaDAO {
     public ArrayList<ComandaRelatorio> ListarComandasPorData (String data) throws SQLException {
         ArrayList<ComandaRelatorio> lista = new ArrayList();
         stmt = conexao.createStatement();
-        sql = "select co.Id, cl.Nome, sum(ip.Valor) ValorTotal "
+        sql = "select co.Id, cl.Nome, sum(ip.Valor * ip.Quantidade) ValorTotal "
             + "from comanda co "
             + "join cliente cl on cl.Id = co.ClienteId "
             + "join itemPedido ip on ip.ComandaId = co.Id "
