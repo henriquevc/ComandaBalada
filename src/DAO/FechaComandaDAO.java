@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -101,8 +102,6 @@ public class FechaComandaDAO {
 
             stmt.executeUpdate(sql);
             
-            //retornar o valor total
-            
             conexao.commit();
         }
         catch (SQLException e){
@@ -113,12 +112,56 @@ public class FechaComandaDAO {
         }
     }
     
-    public String gerarRecibo (String comandasId, float ValorTotalAPagar){
-        String comandas[] = comandasId.split(",");
-
-        String retorno = comandasId + " " + String.valueOf(ValorTotalAPagar);
+    public String gerarRecibo (String comandasId, float ValorTotalAPagar) throws SQLException{
+        String[] comandas;
+        comandas = comandasId.split(",");
+        stmt = conexao.createStatement();
         
+        
+        String retorno = "                       Recibo                       \n\n"
+                       + "====================================================\n\n";
+        
+        for (String comandaId : comandas) {
+            retorno += "Comanda ID: #" + comandaId + "\n";
+            retorno += "ID   Produto             Qtde            Valor\n";
+            sql =   "select ip.Id, p.Nome, ip.Quantidade, p.Valor * ip.Quantidade ValorTotal\n" +
+                "from ItemPedido ip\n" +
+                "join produto p on ip.ProdutoId = p.Id\n" +
+                "where comandaId = " + comandaId;
+            
+            ResultSet rs = stmt.executeQuery(sql);
+            float valorTotalComanda = 0;
+            while(rs.next()){
+               retorno += AlinharCampo(String.valueOf(rs.getInt("id")), 5, "E") + 
+                          AlinharCampo(rs.getString("nome"), 20, "E") + 
+                          AlinharCampo(String.valueOf(rs.getInt("quantidade")), 4, "D") +
+                          AlinharCampo(String.valueOf(rs.getFloat("ValorTotal")), 17, "D") + "\n";
+                          valorTotalComanda += rs.getFloat("ValorTotal");
+            }
+            
+            retorno += "\n\nTotal da Comanda: " + AlinharCampo(String.valueOf(valorTotalComanda), 28, "D");
+            retorno += "\n----------------------------------------------------";
+        }
+        retorno += "\n\n\nValor Total: " + AlinharCampo("R$" + String.valueOf(ValorTotalAPagar), 33, "D");
         
         return retorno;
+    }
+    
+    private String AlinharCampo(String texto, int tamanho, String alinhamento){
+        
+        
+        if(texto.length() > tamanho){
+            texto = texto.substring(0, tamanho);
+        }
+        else{
+            if("E".equals(alinhamento)){
+                texto += String.join("", Collections.nCopies(tamanho - texto.length(), " "));
+            }
+            else{
+                texto = String.join("", Collections.nCopies(tamanho - texto.length(), " ")) + texto;
+            }
+        }
+        
+        return texto;
     }
 }

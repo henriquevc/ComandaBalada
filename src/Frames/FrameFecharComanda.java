@@ -72,10 +72,10 @@ public class FrameFecharComanda extends javax.swing.JFrame {
         tfValorTotal = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         btnFechar = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        lblValorTotalAPagar = new javax.swing.JLabel();
         tfValorTotalPagar = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
+        btnRecibo = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -126,21 +126,21 @@ public class FrameFecharComanda extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Valor Total a Pagar:");
+        lblValorTotalAPagar.setText("Valor Total a Pagar:");
 
         tfValorTotalPagar.setEditable(false);
 
-        jButton1.setText("Limpar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnLimparActionPerformed(evt);
             }
         });
 
-        jButton2.setText("abrir recibo");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnRecibo.setText("abrir recibo");
+        btnRecibo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnReciboActionPerformed(evt);
             }
         });
 
@@ -160,19 +160,19 @@ public class FrameFecharComanda extends javax.swing.JFrame {
                                 .addGap(33, 33, 33)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton1)
+                                        .addComponent(btnLimpar)
                                         .addGap(28, 28, 28)
                                         .addComponent(btnFechar))
                                     .addComponent(lblComandasFechando, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblValorTotal)
                                     .addComponent(tfComandasFechando, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel2)
+                                    .addComponent(lblValorTotalAPagar)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(tfValorTotalPagar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
                                         .addComponent(tfValorTotal, javax.swing.GroupLayout.Alignment.LEADING))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(132, 132, 132)
-                                .addComponent(jButton2))))
+                                .addComponent(btnRecibo))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -203,15 +203,15 @@ public class FrameFecharComanda extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
+                        .addComponent(lblValorTotalAPagar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(tfValorTotalPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnFechar)
-                            .addComponent(jButton1))
+                            .addComponent(btnLimpar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)))
+                        .addComponent(btnRecibo)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -240,33 +240,31 @@ public class FrameFecharComanda extends javax.swing.JFrame {
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
         // TODO add your handling code here:
         String comandasId = tfComandasFechando.getText().replaceFirst(",", " ");
+        String retorno = null;
         
         try {
             acessoFechaComanda.FecharComandas(comandasId, valorTotal);
-            String retorno = acessoFechaComanda.gerarRecibo(comandasId, valorTotalAPagar);
+            retorno = acessoFechaComanda.gerarRecibo(comandasId, valorTotalAPagar);
             new FrameRecibo(retorno).setVisible(true);
-            
         } catch (SQLException ex) {
             Logger.getLogger(FrameFecharComanda.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_btnFecharActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         // TODO add your handling code here:
         valorTotal = 0;
         valorTotalAPagar = 0;
         tfComandasFechando.setText("");
         tfValorTotal.setText("");
         tfValorTotalPagar.setText("");
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnLimparActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnReciboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReciboActionPerformed
         // TODO add your handling code here:
-        String comandasId = tfComandasFechando.getText().replaceFirst(",", " ");
-        String retorno = acessoFechaComanda.gerarRecibo(comandasId, valorTotalAPagar);
-        new FrameRecibo(retorno).setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+
+    }//GEN-LAST:event_btnReciboActionPerformed
     
     public String formatarFloat(float numeroF) {
         String retorno = "";
@@ -320,16 +318,16 @@ public class FrameFecharComanda extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnFechar;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnLimpar;
+    private javax.swing.JButton btnRecibo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel lblComandasFechando;
     private javax.swing.JLabel lblValorTotal;
+    private javax.swing.JLabel lblValorTotalAPagar;
     private javax.swing.JTable tableComandas;
     private javax.swing.JTextField tfComandasFechando;
     private javax.swing.JTextField tfValorTotal;
