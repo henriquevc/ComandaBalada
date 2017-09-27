@@ -5,6 +5,16 @@
  */
 package Frames;
 
+import Classes.ItemFechamento;
+import DAO.FechaComandaDAO;
+import java.awt.Color;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Henrique
@@ -13,9 +23,32 @@ public class FrameFecharComanda extends javax.swing.JFrame {
 
     /**
      * Creates new form FrameFecharComanda
+     * @throws java.sql.SQLException
      */
-    public FrameFecharComanda() {
+    public FrameFecharComanda() throws SQLException {
         initComponents();
+        this.getContentPane().setBackground(new Color(250, 250, 250));
+        CreateTable();
+    }
+    
+    FechaComandaDAO acessoFechaComanda = new FechaComandaDAO();
+    
+    @SuppressWarnings("empty-statement")
+    private void CreateTable() throws SQLException {
+        //Integer.parseInt(tfBuscaComanda.getText())
+        ArrayList<ItemFechamento> lista = acessoFechaComanda.ListarComandasAbertas();
+
+        String col[] = { "Id Comanda", "Nome Cliente", "Valor Total", "Crédito Disponível", "Valor A Pagar"};
+        DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+        lista.stream().map((item) -> {
+            float totalAPagar =  item.valorTotal - item.creditoDisponivel;
+            Object[] i = {item.comandaId, item.nomeCliente, formatarFloat(item.valorTotal) , formatarFloat(item.creditoDisponivel), totalAPagar < 0 ? "0.00" : formatarFloat(totalAPagar) };  
+            return i;
+        }).forEachOrdered((i) -> {
+            tableModel.addRow(i);
+        });
+;
+        tableComandas.setModel(tableModel);
     }
 
     /**
@@ -27,53 +60,224 @@ public class FrameFecharComanda extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableComandas = new javax.swing.JTable();
+        btnAdicionar = new javax.swing.JButton();
+        tfComandasFechando = new javax.swing.JTextField();
+        lblComandasFechando = new javax.swing.JLabel();
+        lblValorTotal = new javax.swing.JLabel();
+        tfValorTotal = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        btnFechar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        tfValorTotalPagar = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane2.setViewportView(jTextArea1);
 
-        jLabel1.setText("jLabel1");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setText("Comandas Abertas");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tableComandas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID da Comanda", "Nome Cliente", "Valor Total", "Valor Acumulado", "Valor A Pagar"
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.Float.class, java.lang.Float.class, java.lang.Float.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tableComandas);
+
+        btnAdicionar.setText(">");
+        btnAdicionar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarActionPerformed(evt);
+            }
+        });
+
+        tfComandasFechando.setEditable(false);
+
+        lblComandasFechando.setText("Comandas a serem fechadas:");
+
+        lblValorTotal.setText("Valor Total:");
+
+        tfValorTotal.setEditable(false);
+
+        jLabel4.setText("* Selecione a linha e clique em \">\"");
+
+        btnFechar.setText("Fechar Comandas");
+        btnFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Valor Total a Pagar:");
+
+        tfValorTotalPagar.setEditable(false);
+
+        jButton1.setText("Limpar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("abrir recibo");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(44, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
             .addGroup(layout.createSequentialGroup()
-                .addGap(201, 201, 201)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAdicionar)
+                                .addGap(33, 33, 33)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton1)
+                                        .addGap(28, 28, 28)
+                                        .addComponent(btnFechar))
+                                    .addComponent(lblComandasFechando, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lblValorTotal)
+                                    .addComponent(tfComandasFechando, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(tfValorTotalPagar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                                        .addComponent(tfValorTotal, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(132, 132, 132)
+                                .addComponent(jButton2))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(38, 38, 38)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(154, 154, 154)
+                                .addComponent(jLabel1)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(33, 33, 33)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblComandasFechando)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(tfComandasFechando, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAdicionar))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblValorTotal)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tfValorTotalPagar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnFechar)
+                            .addComponent(jButton1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+    float valorTotal = 0;
+    float valorTotalAPagar = 0;
+    
+    private void btnAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tableComandas.getSelectedRow();
+        Object comandaId = tableComandas.getValueAt(selectedRow, 0);
+        float valorComanda = Float.parseFloat((String)tableComandas.getValueAt(selectedRow, 2));
+        valorTotalAPagar += Float.parseFloat((String)tableComandas.getValueAt(selectedRow, 4));
+        tfComandasFechando.setText(tfComandasFechando.getText() + "," + comandaId.toString() );
+        
+        valorTotal = valorTotal + valorComanda;
+        
+        tfValorTotalPagar.setText(formatarFloat(valorTotalAPagar));
+        tfValorTotal.setText(formatarFloat(valorTotal));
+    }//GEN-LAST:event_btnAdicionarActionPerformed
 
+    private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
+        // TODO add your handling code here:
+        String comandasId = tfComandasFechando.getText().replaceFirst(",", " ");
+        
+        try {
+            acessoFechaComanda.FecharComandas(comandasId, valorTotal);
+            String retorno = acessoFechaComanda.gerarRecibo(comandasId, valorTotalAPagar);
+            new FrameRecibo(retorno).setVisible(true);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameFecharComanda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnFecharActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        valorTotal = 0;
+        valorTotalAPagar = 0;
+        tfComandasFechando.setText("");
+        tfValorTotal.setText("");
+        tfValorTotalPagar.setText("");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        String comandasId = tfComandasFechando.getText().replaceFirst(",", " ");
+        String retorno = acessoFechaComanda.gerarRecibo(comandasId, valorTotalAPagar);
+        new FrameRecibo(retorno).setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    public String formatarFloat(float numeroF) {
+        String retorno = "";
+        DecimalFormat formatter = new DecimalFormat("#.00");
+        try{
+            retorno = formatter.format(numeroF).replace(",", ".");
+        }catch(Exception ex){
+          System.err.println("Erro ao formatar numero: " + ex);
+        }
+        return retorno;
+    }
     /**
      * @param args the command line arguments
      */
@@ -104,14 +308,31 @@ public class FrameFecharComanda extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameFecharComanda().setVisible(true);
+                try {
+                    new FrameFecharComanda().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FrameFecharComanda.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAdicionar;
+    private javax.swing.JButton btnFechar;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JLabel lblComandasFechando;
+    private javax.swing.JLabel lblValorTotal;
+    private javax.swing.JTable tableComandas;
+    private javax.swing.JTextField tfComandasFechando;
+    private javax.swing.JTextField tfValorTotal;
+    private javax.swing.JTextField tfValorTotalPagar;
     // End of variables declaration//GEN-END:variables
 }

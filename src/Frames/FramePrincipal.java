@@ -36,10 +36,12 @@ public class FramePrincipal extends javax.swing.JFrame {
         btnCadastrarCliente = new javax.swing.JButton();
         btnRegistrarPedido = new javax.swing.JButton();
         btnCadastrarProduto = new javax.swing.JButton();
-        btnRegistrarPedido1 = new javax.swing.JButton();
-        btnCadastrarCliente1 = new javax.swing.JButton();
+        btnComanda = new javax.swing.JButton();
+        btnRelatorio = new javax.swing.JButton();
+        btnFecharComanda = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Controle de Comadas");
         setBackground(new java.awt.Color(0, 0, 0));
         setForeground(java.awt.Color.white);
 
@@ -71,21 +73,30 @@ public class FramePrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnRegistrarPedido1.setBackground(new java.awt.Color(0, 150, 136));
-        btnRegistrarPedido1.setForeground(new java.awt.Color(255, 255, 255));
-        btnRegistrarPedido1.setText("Comanda");
-        btnRegistrarPedido1.addActionListener(new java.awt.event.ActionListener() {
+        btnComanda.setBackground(new java.awt.Color(0, 150, 136));
+        btnComanda.setForeground(new java.awt.Color(255, 255, 255));
+        btnComanda.setText("Comanda");
+        btnComanda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarPedido1ActionPerformed(evt);
+                btnComandaActionPerformed(evt);
             }
         });
 
-        btnCadastrarCliente1.setBackground(new java.awt.Color(0, 150, 136));
-        btnCadastrarCliente1.setForeground(new java.awt.Color(255, 255, 255));
-        btnCadastrarCliente1.setText("Relatório");
-        btnCadastrarCliente1.addActionListener(new java.awt.event.ActionListener() {
+        btnRelatorio.setBackground(new java.awt.Color(0, 150, 136));
+        btnRelatorio.setForeground(new java.awt.Color(255, 255, 255));
+        btnRelatorio.setText("Relatório");
+        btnRelatorio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastrarCliente1ActionPerformed(evt);
+                btnRelatorioActionPerformed(evt);
+            }
+        });
+
+        btnFecharComanda.setBackground(new java.awt.Color(0, 150, 136));
+        btnFecharComanda.setForeground(new java.awt.Color(255, 255, 255));
+        btnFecharComanda.setText("Fechar Comanda");
+        btnFecharComanda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharComandaActionPerformed(evt);
             }
         });
 
@@ -97,13 +108,13 @@ public class FramePrincipal extends javax.swing.JFrame {
                 .addGap(85, 85, 85)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnCadastrarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
-                    .addComponent(btnRegistrarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnRegistrarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnFecharComanda, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnCadastrarCliente1, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnCadastrarProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
-                        .addComponent(btnRegistrarPedido1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnRelatorio, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(btnCadastrarProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(btnComanda, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(118, 118, 118))
         );
         layout.setVerticalGroup(
@@ -112,9 +123,11 @@ public class FramePrincipal extends javax.swing.JFrame {
                 .addGap(51, 51, 51)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRegistrarPedido1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
-                .addComponent(btnCadastrarCliente1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnComanda, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 25, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRelatorio, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnFecharComanda, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -140,19 +153,28 @@ public class FramePrincipal extends javax.swing.JFrame {
         new FrameRegistrarPedido().setVisible(true);
     }//GEN-LAST:event_btnRegistrarPedidoActionPerformed
 
-    private void btnRegistrarPedido1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarPedido1ActionPerformed
+    private void btnComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComandaActionPerformed
         try {
             // TODO add your handling code here:
             new FrameComanda().setVisible(true);
         } catch (SQLException ex) {
             Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnRegistrarPedido1ActionPerformed
+    }//GEN-LAST:event_btnComandaActionPerformed
 
-    private void btnCadastrarCliente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarCliente1ActionPerformed
+    private void btnRelatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatorioActionPerformed
         // TODO add your handling code here:
         new FrameRelatorio().setVisible(true);
-    }//GEN-LAST:event_btnCadastrarCliente1ActionPerformed
+    }//GEN-LAST:event_btnRelatorioActionPerformed
+
+    private void btnFecharComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharComandaActionPerformed
+        try {
+            // TODO add your handling code here:
+            new FrameFecharComanda().setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(FramePrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnFecharComandaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -192,9 +214,10 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrarCliente;
-    private javax.swing.JButton btnCadastrarCliente1;
     private javax.swing.JButton btnCadastrarProduto;
+    private javax.swing.JButton btnComanda;
+    private javax.swing.JButton btnFecharComanda;
     private javax.swing.JButton btnRegistrarPedido;
-    private javax.swing.JButton btnRegistrarPedido1;
+    private javax.swing.JButton btnRelatorio;
     // End of variables declaration//GEN-END:variables
 }
