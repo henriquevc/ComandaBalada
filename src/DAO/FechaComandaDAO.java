@@ -36,8 +36,8 @@ public class FechaComandaDAO {
         
         stmt = conexao.createStatement();
         sql =   "select cm.Id comandaId, cl.Nome, sum(ip.valor * ip.quantidade) ValorTotal, cl.ValorAcumulado \n" +
-                "from itemPedido ip\n" +
-                "join comanda cm on cm.Id = ip.ComandaId\n" +
+                "from comanda cm\n" +
+                "left join itemPedido ip on cm.Id = ip.ComandaId\n" +
                 "join cliente cl on cl.Id = cm.ClienteId\n" +
                 "where cm.FechamentoComandaId is null\n" +
                 "group by cl.ValorAcumulado, cl.ValorAcumulado, cl.Nome, cm.Id";
@@ -120,9 +120,9 @@ public class FechaComandaDAO {
         
         String retorno = "                       Recibo                       \n\n"
                        + "====================================================\n\n";
-        
+        float valorTotalGeral = 0;
         for (String comandaId : comandas) {
-            retorno += "Comanda ID: #" + comandaId + "\n";
+            retorno += "Comanda ID: #" + comandaId + "\n\n";
             retorno += "ID   Produto             Qtde            Valor\n";
             sql =   "select ip.Id, p.Nome, ip.Quantidade, p.Valor * ip.Quantidade ValorTotal\n" +
                 "from ItemPedido ip\n" +
@@ -138,11 +138,12 @@ public class FechaComandaDAO {
                           AlinharCampo(String.valueOf(rs.getFloat("ValorTotal")), 17, "D") + "\n";
                           valorTotalComanda += rs.getFloat("ValorTotal");
             }
-            
+            valorTotalGeral += valorTotalComanda;
             retorno += "\n\nTotal da Comanda: " + AlinharCampo(String.valueOf(valorTotalComanda), 28, "D");
-            retorno += "\n----------------------------------------------------";
+            retorno += "\n----------------------------------------------------\n";
         }
-        retorno += "\n\n\nValor Total: " + AlinharCampo("R$" + String.valueOf(ValorTotalAPagar), 33, "D");
+        retorno += "\nValor Total Geral:   " + AlinharCampo("R$" + String.valueOf(valorTotalGeral), 25, "D");
+        retorno += "\n\n\nValor Total A Pagar: " + AlinharCampo("R$" + String.valueOf(ValorTotalAPagar), 25, "D");
         
         return retorno;
     }

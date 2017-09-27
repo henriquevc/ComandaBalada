@@ -10,7 +10,7 @@ import DAO.ProdutoDAO;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-import java.util.Set;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,8 +24,9 @@ public class FrameProduto extends javax.swing.JFrame {
      * Creates new form FrameProduto
      */
     public FrameProduto() {            
-        this.getContentPane().setBackground(new Color(250, 250, 250));
+        this.getContentPane().setBackground(new Color(47, 64, 80));
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     ProdutoDAO produtoAcesso = new ProdutoDAO();
     /**
@@ -57,6 +58,7 @@ public class FrameProduto extends javax.swing.JFrame {
             }
         });
 
+        lblBuscar.setForeground(new java.awt.Color(255, 255, 255));
         lblBuscar.setText("Buscar:");
 
         btnExcluir.setText("Excluir");
@@ -80,10 +82,13 @@ public class FrameProduto extends javax.swing.JFrame {
             }
         });
 
+        lblId.setForeground(new java.awt.Color(255, 255, 255));
         lblId.setText("Id:");
 
+        lblNome.setForeground(new java.awt.Color(255, 255, 255));
         lblNome.setText("Nome:");
 
+        lblValor.setForeground(new java.awt.Color(255, 255, 255));
         lblValor.setText("Valor:");
 
         btnLimpar.setText("Limpar");
@@ -226,7 +231,15 @@ public class FrameProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            List<Produto> lista = produtoAcesso.Listar();
+            new FrameListarProdutos(lista).setVisible(true);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameProduto.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnListarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed

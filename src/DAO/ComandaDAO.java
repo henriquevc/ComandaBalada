@@ -117,14 +117,13 @@ public class ComandaDAO {
         return itensPedido;
     }
     
-    
     public ArrayList<ComandaRelatorio> ListarComandasPorData (String data) throws SQLException {
         ArrayList<ComandaRelatorio> lista = new ArrayList();
         stmt = conexao.createStatement();
         sql = "select co.Id, cl.Nome, sum(ip.Valor * ip.Quantidade) ValorTotal "
             + "from comanda co "
             + "join cliente cl on cl.Id = co.ClienteId "
-            + "join itemPedido ip on ip.ComandaId = co.Id "
+            + "left join itemPedido ip on ip.ComandaId = co.Id "
             + "where co.Data = '" + data + "' "
             + "group by co.Id, cl.Nome";
         
@@ -136,5 +135,12 @@ public class ComandaDAO {
         return lista;
     }
     
+    public boolean ComandaAberta (int clienteId) throws SQLException{
+        stmt = conexao.createStatement();
+        sql = "select 1 existe from comanda where fechamentoComandaId is null and clienteId = " + clienteId;
+        ResultSet rs = stmt.executeQuery(sql);
+        
+        return rs.next();
+    }
 }
 

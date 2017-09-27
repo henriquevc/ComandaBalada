@@ -16,6 +16,7 @@ public class FrameRecibo extends javax.swing.JFrame {
      */
     public FrameRecibo() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     
@@ -23,6 +24,7 @@ public class FrameRecibo extends javax.swing.JFrame {
     FrameRecibo(String retorno) {
         initComponents();
         this.jTextArea1.setText(retorno);
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -37,7 +39,6 @@ public class FrameRecibo extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFont(new java.awt.Font("Monospaced", 0, 13)); // NOI18N
 
         jTextArea1.setColumns(20);

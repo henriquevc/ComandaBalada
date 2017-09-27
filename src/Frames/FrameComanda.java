@@ -14,7 +14,10 @@ import DAO.ComandaDAO;
 import DAO.ProdutoDAO;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -31,7 +34,8 @@ public class FrameComanda extends javax.swing.JFrame {
      * @throws java.sql.SQLException
      */
     public FrameComanda() throws SQLException {
-        this.getContentPane().setBackground(new Color(250, 250, 250));
+        this.getContentPane().setBackground(new Color(47, 64, 80));
+        this.setLocationRelativeTo(null);
         initComponents();
     }
     
@@ -47,10 +51,28 @@ public class FrameComanda extends javax.swing.JFrame {
         DefaultTableModel tableModel = new DefaultTableModel(col, 0);
         for ( ItemPedido item : lista){
             Produto prod = acessoProduto.Buscar(item.getProdutoId());
-            Object[] i = {acessoProduto.BuscarNomeProduto(item.getProdutoId()), item.getValor(), item.getQuantidade(), item.getValor() * item.getQuantidade() };  
+            Object[] i = {acessoProduto.BuscarNomeProduto(item.getProdutoId()), formatarMoeda((float) item.getValor()), item.getQuantidade(), formatarMoeda((float) (item.getValor() * item.getQuantidade())) };  
             tableModel.addRow(i);
         };
         jTable1.setModel(tableModel);
+    }
+    
+    public String formatarFloat(float numeroF) {
+        String retorno = "";
+
+        DecimalFormat formatter = new DecimalFormat("#.00");
+        try{
+            retorno = formatter.format(numeroF).replace(",", ".");
+        }catch(Exception ex){
+          System.err.println("Erro ao formatar numero: " + ex);
+        }
+        return retorno;
+    }
+    
+    public String formatarMoeda (float numero){
+        Locale brasil = new Locale("pt", "BR");
+        NumberFormat formatadorMoeda = NumberFormat.getCurrencyInstance(brasil);
+        return formatadorMoeda.format(numero);
     }
 
     /**
@@ -69,10 +91,10 @@ public class FrameComanda extends javax.swing.JFrame {
         lblPedidos = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        btnAlterar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         tfValorAcumulado = new javax.swing.JTextField();
 
+        lblBuscaComanda.setForeground(new java.awt.Color(255, 255, 255));
         lblBuscaComanda.setText("Buscar por Id:");
 
         tfBuscaComanda.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -81,8 +103,10 @@ public class FrameComanda extends javax.swing.JFrame {
             }
         });
 
+        lblNomeCliente.setForeground(new java.awt.Color(255, 255, 255));
         lblNomeCliente.setText("Nome do cliente:");
 
+        lblPedidos.setForeground(new java.awt.Color(255, 255, 255));
         lblPedidos.setText("Pedidos");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -110,47 +134,41 @@ public class FrameComanda extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable1);
 
-        btnAlterar.setText("Alterar");
-        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Valor Acumulado:");
+
+        tfValorAcumulado.setEditable(false);
+        tfValorAcumulado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAlterarActionPerformed(evt);
+                tfValorAcumuladoActionPerformed(evt);
             }
         });
-
-        jLabel1.setText("Valor Acumulado:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(5, 5, 5)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblNomeCliente)
-                                    .addComponent(lblBuscaComanda)))
-                            .addComponent(jLabel1))
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfBuscaComanda, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
-                            .addComponent(tfNomeCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
-                            .addComponent(tfValorAcumulado))
-                        .addGap(19, 19, 19))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(192, 192, 192)
                 .addComponent(lblPedidos)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 256, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAlterar)
-                .addGap(193, 193, 193))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblNomeCliente)
+                            .addComponent(jLabel1)
+                            .addComponent(lblBuscaComanda))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfBuscaComanda, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                            .addComponent(tfNomeCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                            .addComponent(tfValorAcumulado))))
+                .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,10 +188,8 @@ public class FrameComanda extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lblPedidos)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(btnAlterar)
-                .addGap(22, 22, 22))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
@@ -185,7 +201,9 @@ public class FrameComanda extends javax.swing.JFrame {
             Comanda comanda = acessoComanda.Buscar(Integer.parseInt(tfBuscaComanda.getText()));
             Cliente cliente = new ClienteDAO().Buscar(comanda.getClienteId());
             tfNomeCliente.setText(cliente.getNome());
-            tfValorAcumulado.setText(String.valueOf(cliente.getValorAcumulado()));
+
+            //tfValorAcumulado.setText(formatarFloat((float) cliente.getValorAcumulado()));
+            tfValorAcumulado.setText(formatarMoeda((float)cliente.getValorAcumulado()));
             CreateTable(comanda.getId());
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, ex.toString(), "ERRO", 0);
@@ -196,9 +214,9 @@ public class FrameComanda extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+    private void tfValorAcumuladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfValorAcumuladoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAlterarActionPerformed
+    }//GEN-LAST:event_tfValorAcumuladoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,7 +258,6 @@ public class FrameComanda extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAlterar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;

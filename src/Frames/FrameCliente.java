@@ -12,8 +12,11 @@ import DAO.ComandaDAO;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,8 +28,9 @@ public class FrameCliente extends javax.swing.JFrame {
      * Creates new form Cliente
      */
     public FrameCliente() {
-        this.getContentPane().setBackground(new Color(250, 250, 250));
+        this.getContentPane().setBackground(new Color(47, 64, 80));
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
     Cliente cliente = new Cliente();
@@ -49,11 +53,14 @@ public class FrameCliente extends javax.swing.JFrame {
         lblTelefone = new javax.swing.JLabel();
         tfTelefone = new javax.swing.JFormattedTextField();
         lblValorAcumulado = new javax.swing.JLabel();
-        btnSalvar = new javax.swing.JButton();
+        btnSalvarAbrirComanda = new javax.swing.JButton();
         tfValorAcumulado = new javax.swing.JFormattedTextField();
         lblId = new javax.swing.JLabel();
         tfId = new javax.swing.JTextField();
+        btnSalvar = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
 
+        lblCpf.setForeground(new java.awt.Color(255, 255, 255));
         lblCpf.setText("CPF:");
 
         try {
@@ -72,8 +79,10 @@ public class FrameCliente extends javax.swing.JFrame {
             }
         });
 
+        lblNome.setForeground(new java.awt.Color(255, 255, 255));
         lblNome.setText("Nome:");
 
+        lblTelefone.setForeground(new java.awt.Color(255, 255, 255));
         lblTelefone.setText("Telefone:");
 
         try {
@@ -88,12 +97,13 @@ public class FrameCliente extends javax.swing.JFrame {
             }
         });
 
+        lblValorAcumulado.setForeground(new java.awt.Color(255, 255, 255));
         lblValorAcumulado.setText("Valor Acumulado:");
 
-        btnSalvar.setText("Salvar");
-        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+        btnSalvarAbrirComanda.setText("Salvar e Abrir Comanda");
+        btnSalvarAbrirComanda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarActionPerformed(evt);
+                btnSalvarAbrirComandaActionPerformed(evt);
             }
         });
 
@@ -105,19 +115,30 @@ public class FrameCliente extends javax.swing.JFrame {
             }
         });
 
+        lblId.setForeground(new java.awt.Color(255, 255, 255));
         lblId.setText("Id:");
 
         tfId.setEditable(false);
         tfId.setDisabledTextColor(new java.awt.Color(153, 153, 153));
 
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(171, Short.MAX_VALUE)
-                .addComponent(btnSalvar)
-                .addGap(166, 166, 166))
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,16 +147,20 @@ public class FrameCliente extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(lblValorAcumulado, javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(lblTelefone))
-                    .addComponent(lblId))
+                    .addComponent(lblId)
+                    .addComponent(btnSalvar))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(tfCpf)
-                        .addComponent(tfNome, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                        .addComponent(tfTelefone, javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(tfValorAcumulado))
-                    .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(tfTelefone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                    .addComponent(tfCpf, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(btnLimpar)
+                        .addGap(29, 29, 29)
+                        .addComponent(btnSalvarAbrirComanda))
+                    .addComponent(tfId, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfNome, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tfValorAcumulado))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,15 +185,18 @@ public class FrameCliente extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfValorAcumulado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblValorAcumulado))
-                .addGap(18, 18, 18)
-                .addComponent(btnSalvar)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvarAbrirComanda)
+                    .addComponent(btnSalvar)
+                    .addComponent(btnLimpar))
+                .addGap(29, 29, 29))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+    private void btnSalvarAbrirComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAbrirComandaActionPerformed
         // TODO add your handling code here:
         
         cliente.setId(Integer.parseInt(tfId.getText()));
@@ -176,17 +204,26 @@ public class FrameCliente extends javax.swing.JFrame {
         cliente.setCpf(tfCpf.getText());
         cliente.setTelefone(tfTelefone.getText());
         String valoracumulado = tfValorAcumulado.getText().replace(".", "").replace(",", ".");
+
         cliente.setValorAcumulado(Float.parseFloat(valoracumulado));
         try {
             int idCliente = clienteDAO.Salvar(cliente);
-            comanda.setClienteId(idCliente);
-            comandaDAO.Incluir(comanda);
-
+            if (!comandaDAO.ComandaAberta(idCliente)){
+                comanda.setClienteId(idCliente);
+                comandaDAO.Incluir(comanda);
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Já existe uma comanda aberta pra esse cliente", "ERRO", 0);
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(FrameCliente.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "ERRO ao gravar no Banco", "ERRO", 0);
         }
         
-    }//GEN-LAST:event_btnSalvarActionPerformed
+    }//GEN-LAST:event_btnSalvarAbrirComandaActionPerformed
+    
+
+    
     public String formatarFloat(String numero){
         float numeroF = Float.parseFloat(numero);
         String retorno = "";
@@ -222,6 +259,31 @@ public class FrameCliente extends javax.swing.JFrame {
     private void tfValorAcumuladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfValorAcumuladoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tfValorAcumuladoActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        // TODO add your handling code here:
+        tfId.setText("");
+        tfCpf.setText("");
+        tfNome.setText("");
+        tfTelefone.setText("");
+        tfValorAcumulado.setText("");
+    }//GEN-LAST:event_btnLimparActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        // TODO add your handling code here:
+        cliente.setId(Integer.parseInt(tfId.getText()));
+        cliente.setNome(tfNome.getText());
+        cliente.setCpf(tfCpf.getText());
+        cliente.setTelefone(tfTelefone.getText());
+        String valoracumulado = tfValorAcumulado.getText().replace(".", "").replace(",", ".");
+        cliente.setValorAcumulado(Float.parseFloat(valoracumulado));
+        try {
+            int idCliente = clienteDAO.Salvar(cliente);
+            tfId.setText(String.valueOf(idCliente));
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -259,7 +321,9 @@ public class FrameCliente extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnSalvar;
+    private javax.swing.JButton btnSalvarAbrirComanda;
     private javax.swing.JLabel lblCpf;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNome;

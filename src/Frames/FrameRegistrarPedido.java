@@ -5,12 +5,16 @@
  */
 package Frames;
 
+import Classes.Comanda;
+import Classes.Produto;
+import DAO.ComandaDAO;
 import DAO.PedidoDAO;
 import DAO.ProdutoDAO;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,7 +26,8 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
      * Creates new form FrameRegistrarPedido
      */
     public FrameRegistrarPedido() {
-        this.getContentPane().setBackground(new Color(250, 250, 250));
+        this.setLocationRelativeTo(null);
+        this.getContentPane().setBackground(new Color(47, 64, 80));
         initComponents();
         listarProdutos();
     }
@@ -43,7 +48,9 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
         tfQuantidade = new javax.swing.JTextField();
         lblQuantidade = new javax.swing.JLabel();
         btnRegistrar = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
 
+        lblIdComanda.setForeground(new java.awt.Color(255, 255, 255));
         lblIdComanda.setText("ID da Comanda: ");
 
         tfIdComanda.addActionListener(new java.awt.event.ActionListener() {
@@ -52,6 +59,7 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
             }
         });
 
+        lblProduto.setForeground(new java.awt.Color(255, 255, 255));
         lblProduto.setText("Produto:");
 
         jcbProdutos.addActionListener(new java.awt.event.ActionListener() {
@@ -60,6 +68,7 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
             }
         });
 
+        lblQuantidade.setForeground(new java.awt.Color(255, 255, 255));
         lblQuantidade.setText("Quantidade:");
 
         btnRegistrar.setText("Registrar");
@@ -69,12 +78,19 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
             }
         });
 
+        btnLimpar.setText("Limpar");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(72, 72, 72)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -88,7 +104,9 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
                             .addComponent(jcbProdutos, 0, 155, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(161, 161, 161)
-                        .addComponent(btnRegistrar)))
+                        .addComponent(btnRegistrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addComponent(btnLimpar)))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -107,7 +125,9 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
                     .addComponent(tfQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblQuantidade))
                 .addGap(42, 42, 42)
-                .addComponent(btnRegistrar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRegistrar)
+                    .addComponent(btnLimpar))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
 
@@ -116,8 +136,8 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
     private void listarProdutos (){
         ProdutoDAO acessaProduto = new ProdutoDAO();
         try {
-            for(String produto : acessaProduto.Listar()){
-                jcbProdutos.addItem(produto);
+            for(Produto produto : acessaProduto.Listar()){
+                jcbProdutos.addItem(produto.getNome());
             }
         } catch (SQLException ex) {
             Logger.getLogger(FrameRegistrarPedido.class.getName()).log(Level.SEVERE, null, ex);
@@ -136,14 +156,27 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
         int comandaId = Integer.parseInt(tfIdComanda.getText());
         String produtoSelecionado = jcbProdutos.getSelectedItem().toString();
         int quantidade = Integer.parseInt(tfQuantidade.getText());
-        PedidoDAO pedido = new PedidoDAO();
+        PedidoDAO acessoPedido = new PedidoDAO();
+        ComandaDAO acessoComanda = new ComandaDAO();
         try {
-            pedido.registraPedido(comandaId, produtoSelecionado, quantidade);
+            if (acessoPedido.ComandaAberta(comandaId)) {
+                acessoPedido.registraPedido(comandaId, produtoSelecionado, quantidade);
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Essa comanda já foi fechada", "ERRO", 0);
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(FrameRegistrarPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+        // TODO add your handling code here:
+        tfIdComanda.setText("");
+        tfQuantidade.setText("");
+    }//GEN-LAST:event_btnLimparActionPerformed
 
     /**
      * @param args the command line arguments
@@ -181,6 +214,7 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<String> jcbProdutos;
     private javax.swing.JLabel lblIdComanda;

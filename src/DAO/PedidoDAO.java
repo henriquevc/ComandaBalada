@@ -7,6 +7,7 @@ package DAO;
 
 import Classes.Produto;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
@@ -37,6 +38,16 @@ public class PedidoDAO {
             JOptionPane.showMessageDialog(null, "ERRO ao gravar o pedido, tente novamente", "ERRO", 0);
             
     }
+    
+    public boolean ComandaAberta (int comandaId) throws SQLException{
+        stmt = conexao.createStatement();
+        
+        sql = "select 1 existe from comanda where fechamentoComandaId is null and Id = " + comandaId;
+        
+        ResultSet rs = stmt.executeQuery(sql);
+        
+        return rs.next();
+    } 
     
     
 }

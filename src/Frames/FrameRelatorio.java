@@ -11,7 +11,9 @@ import Classes.Produto;
 import DAO.ComandaDAO;
 import java.awt.Color;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -27,7 +29,8 @@ public class FrameRelatorio extends javax.swing.JFrame {
      * Creates new form FrameComandas
      */
     public FrameRelatorio() {
-        this.getContentPane().setBackground(new Color(250, 250, 250));
+        this.getContentPane().setBackground(new Color(47, 64, 80));
+        this.setLocationRelativeTo(null);        
         initComponents();
     }
 
@@ -46,6 +49,7 @@ public class FrameRelatorio extends javax.swing.JFrame {
         jtableComandas = new javax.swing.JTable();
         tfData = new javax.swing.JFormattedTextField();
 
+        lblDescricao.setForeground(new java.awt.Color(255, 255, 255));
         lblDescricao.setText("Entre com a data:");
 
         btnConsultar.setText("Consultar");
@@ -57,15 +61,20 @@ public class FrameRelatorio extends javax.swing.JFrame {
 
         jtableComandas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Id Comanda", "Nome do Cliente", "Valor Total"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jtableComandas);
 
         try {
@@ -141,10 +150,17 @@ public class FrameRelatorio extends javax.swing.JFrame {
         String col[] = { "Id Comanda", "Nome do Cliente", "Valor Total"};
         DefaultTableModel tableModel = new DefaultTableModel(col, 0);
         for ( ComandaRelatorio item : lista){
-            Object[] i = {item.getId(), item.getNome(), item.getValor()};  
+            Object[] i = {item.getId(), item.getNome(), formatarMoeda(item.getValor())};  
             tableModel.addRow(i);
         };
         jtableComandas.setModel(tableModel);
+        //jtableComandas.setDefaultEditor(Object.class, null);
+    }
+    
+    public String formatarMoeda (float numero){
+        Locale brasil = new Locale("pt", "BR");
+        NumberFormat formatadorMoeda = NumberFormat.getCurrencyInstance(brasil);
+        return formatadorMoeda.format(numero);
     }
     /**
      * @param args the command line arguments

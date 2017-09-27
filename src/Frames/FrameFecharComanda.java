@@ -10,7 +10,9 @@ import DAO.FechaComandaDAO;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -27,7 +29,8 @@ public class FrameFecharComanda extends javax.swing.JFrame {
      */
     public FrameFecharComanda() throws SQLException {
         initComponents();
-        this.getContentPane().setBackground(new Color(250, 250, 250));
+        this.setLocationRelativeTo(null);
+        this.getContentPane().setBackground(new Color(47, 64, 80));
         CreateTable();
     }
     
@@ -42,13 +45,20 @@ public class FrameFecharComanda extends javax.swing.JFrame {
         DefaultTableModel tableModel = new DefaultTableModel(col, 0);
         lista.stream().map((item) -> {
             float totalAPagar =  item.valorTotal - item.creditoDisponivel;
-            Object[] i = {item.comandaId, item.nomeCliente, formatarFloat(item.valorTotal) , formatarFloat(item.creditoDisponivel), totalAPagar < 0 ? "0.00" : formatarFloat(totalAPagar) };  
+            Object[] i = {item.comandaId, item.nomeCliente, formatarMoeda(item.valorTotal) , formatarMoeda(item.creditoDisponivel), totalAPagar < 0 ? "R$ 0.00" : formatarMoeda(totalAPagar) };  
             return i;
         }).forEachOrdered((i) -> {
             tableModel.addRow(i);
         });
-;
+        
         tableComandas.setModel(tableModel);
+        tableComandas.setDefaultEditor(Object.class, null);
+    }
+    
+    public String formatarMoeda (float numero){
+        Locale brasil = new Locale("pt", "BR");
+        NumberFormat formatadorMoeda = NumberFormat.getCurrencyInstance(brasil);
+        return formatadorMoeda.format(numero);
     }
 
     /**
@@ -75,13 +85,13 @@ public class FrameFecharComanda extends javax.swing.JFrame {
         lblValorTotalAPagar = new javax.swing.JLabel();
         tfValorTotalPagar = new javax.swing.JTextField();
         btnLimpar = new javax.swing.JButton();
-        btnRecibo = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Comandas Abertas");
 
         tableComandas.setModel(new javax.swing.table.DefaultTableModel(
@@ -111,12 +121,15 @@ public class FrameFecharComanda extends javax.swing.JFrame {
 
         tfComandasFechando.setEditable(false);
 
+        lblComandasFechando.setForeground(new java.awt.Color(255, 255, 255));
         lblComandasFechando.setText("Comandas a serem fechadas:");
 
+        lblValorTotal.setForeground(new java.awt.Color(255, 255, 255));
         lblValorTotal.setText("Valor Total:");
 
         tfValorTotal.setEditable(false);
 
+        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
         jLabel4.setText("* Selecione a linha e clique em \">\"");
 
         btnFechar.setText("Fechar Comandas");
@@ -126,6 +139,7 @@ public class FrameFecharComanda extends javax.swing.JFrame {
             }
         });
 
+        lblValorTotalAPagar.setForeground(new java.awt.Color(255, 255, 255));
         lblValorTotalAPagar.setText("Valor Total a Pagar:");
 
         tfValorTotalPagar.setEditable(false);
@@ -134,13 +148,6 @@ public class FrameFecharComanda extends javax.swing.JFrame {
         btnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLimparActionPerformed(evt);
-            }
-        });
-
-        btnRecibo.setText("abrir recibo");
-        btnRecibo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnReciboActionPerformed(evt);
             }
         });
 
@@ -153,26 +160,21 @@ public class FrameFecharComanda extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAdicionar)
+                        .addGap(33, 33, 33)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(btnAdicionar)
-                                .addGap(33, 33, 33)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(btnLimpar)
-                                        .addGap(28, 28, 28)
-                                        .addComponent(btnFechar))
-                                    .addComponent(lblComandasFechando, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblValorTotal)
-                                    .addComponent(tfComandasFechando, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblValorTotalAPagar)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(tfValorTotalPagar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
-                                        .addComponent(tfValorTotal, javax.swing.GroupLayout.Alignment.LEADING))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(132, 132, 132)
-                                .addComponent(btnRecibo))))
+                                .addComponent(btnLimpar)
+                                .addGap(28, 28, 28)
+                                .addComponent(btnFechar))
+                            .addComponent(lblComandasFechando, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblValorTotal)
+                            .addComponent(tfComandasFechando, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblValorTotalAPagar)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(tfValorTotalPagar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE)
+                                .addComponent(tfValorTotal, javax.swing.GroupLayout.Alignment.LEADING))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -190,7 +192,7 @@ public class FrameFecharComanda extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblComandasFechando)
@@ -209,12 +211,10 @@ public class FrameFecharComanda extends javax.swing.JFrame {
                         .addGap(40, 40, 40)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnFechar)
-                            .addComponent(btnLimpar))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRecibo)))
+                            .addComponent(btnLimpar))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -227,14 +227,14 @@ public class FrameFecharComanda extends javax.swing.JFrame {
         // TODO add your handling code here:
         int selectedRow = tableComandas.getSelectedRow();
         Object comandaId = tableComandas.getValueAt(selectedRow, 0);
-        float valorComanda = Float.parseFloat((String)tableComandas.getValueAt(selectedRow, 2));
-        valorTotalAPagar += Float.parseFloat((String)tableComandas.getValueAt(selectedRow, 4));
+        float valorComanda = Float.parseFloat(String.valueOf(tableComandas.getValueAt(selectedRow, 2)).replace(",", ".").replace("R$",""));
+        valorTotalAPagar += Float.parseFloat(String.valueOf(tableComandas.getValueAt(selectedRow, 4)).replace(",", ".").replace("R$",""));
         tfComandasFechando.setText(tfComandasFechando.getText() + "," + comandaId.toString() );
         
         valorTotal = valorTotal + valorComanda;
         
-        tfValorTotalPagar.setText(formatarFloat(valorTotalAPagar));
-        tfValorTotal.setText(formatarFloat(valorTotal));
+        tfValorTotalPagar.setText(formatarMoeda(valorTotalAPagar));
+        tfValorTotal.setText(formatarMoeda(valorTotal));
     }//GEN-LAST:event_btnAdicionarActionPerformed
 
     private void btnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharActionPerformed
@@ -260,11 +260,6 @@ public class FrameFecharComanda extends javax.swing.JFrame {
         tfValorTotal.setText("");
         tfValorTotalPagar.setText("");
     }//GEN-LAST:event_btnLimparActionPerformed
-
-    private void btnReciboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReciboActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_btnReciboActionPerformed
     
     public String formatarFloat(float numeroF) {
         String retorno = "";
@@ -319,7 +314,6 @@ public class FrameFecharComanda extends javax.swing.JFrame {
     private javax.swing.JButton btnAdicionar;
     private javax.swing.JButton btnFechar;
     private javax.swing.JButton btnLimpar;
-    private javax.swing.JButton btnRecibo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;

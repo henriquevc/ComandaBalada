@@ -21,7 +21,8 @@ public class FramePrincipal extends javax.swing.JFrame {
      */
     public FramePrincipal() {
         initComponents();
-        this.getContentPane().setBackground(new Color(250, 250, 250));
+        this.setLocationRelativeTo(null);
+        this.getContentPane().setBackground(new Color(47, 64, 80));
     }
 
     /**

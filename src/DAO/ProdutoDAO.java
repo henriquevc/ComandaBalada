@@ -115,14 +115,17 @@ public class ProdutoDAO {
         return prod;
     }
     
-    public List<String> Listar () throws SQLException {
-        ArrayList<String> listProdutos = new ArrayList<>();
+    public List<Produto> Listar () throws SQLException {
+        ArrayList<Produto> listProdutos = new ArrayList<>();
         stmt = conexao.createStatement();
         sql = "select * from produto";
-        String[] produtos;
         ResultSet rs = stmt.executeQuery(sql);
         while(rs.next()){
-            listProdutos.add(rs.getString("nome"));
+            Produto p = new Produto();
+            p.setId(rs.getInt("Id"));
+            p.setNome(rs.getString("Nome"));
+            p.setValor(rs.getFloat("Valor"));
+            listProdutos.add(p);
         }
         return listProdutos;
     }
