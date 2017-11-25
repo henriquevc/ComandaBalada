@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Frames;
+package Views;
 
-import DAO.ClienteDAO;
-import Classes.Cliente;
-import Classes.Comanda;
-import DAO.ComandaDAO;
+import Controller.SalvarClienteController;
+import Models.ClienteDAO;
+import Models.Cliente;
+import Models.Comanda;
+import Models.ComandaDAO;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.DecimalFormat;

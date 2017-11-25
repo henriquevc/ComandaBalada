@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DAO;
+package Controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,7 +30,7 @@ public class AcessaDB {
     
         Connection con = null;
         String url, user, password;
-        url = "jdbc:sqlserver://servagilus.dyndns.org:1433;databaseName=dbComandaBalada";
+        url = "jdbc:sqlserver://servagilus.dyndns.org:11000;databaseName=dbComandaBalada";
         user = "claudio";
         password = "op@58523";
         try {

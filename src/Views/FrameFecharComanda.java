@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Frames;
+package Views;
 
-import Classes.ItemFechamento;
-import DAO.FechaComandaDAO;
+import Models.ItemFechamento;
+import Models.FechaComandaDAO;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.DecimalFormat;

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Frames;
+package Views;
 
-import Classes.Comanda;
-import Classes.Produto;
-import DAO.ComandaDAO;
-import DAO.PedidoDAO;
-import DAO.ProdutoDAO;
+import Models.Comanda;
+import Models.Produto;
+import Models.ComandaDAO;
+import Models.PedidoDAO;
+import Models.ProdutoDAO;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.logging.Level;

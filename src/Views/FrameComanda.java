@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Frames;
+package Views;
 
-import Classes.Cliente;
-import Classes.Comanda;
-import Classes.ItemPedido;
-import Classes.Produto;
-import DAO.ClienteDAO;
-import DAO.ComandaDAO;
-import DAO.ProdutoDAO;
+import Models.Cliente;
+import Models.Comanda;
+import Models.ItemPedido;
+import Models.Produto;
+import Models.ClienteDAO;
+import Models.ComandaDAO;
+import Models.ProdutoDAO;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.text.DecimalFormat;

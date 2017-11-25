@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DAO;
+package Models;
 
-import Classes.Comanda;
-import Classes.ComandaRelatorio;
-import Classes.ItemPedido;
+import Models.Comanda;
+import Models.ComandaRelatorio;
+import Models.ItemPedido;
+import Controller.AcessaDB;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

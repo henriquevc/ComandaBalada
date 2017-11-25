@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Frames;
+package Views;
 
-import Classes.Produto;
+import Models.Produto;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
