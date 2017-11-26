@@ -5,11 +5,8 @@
  */
 package Relatorio;
 
-import Controller.AcessaDB;
+import Model.AcessaDB;
 import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.logging.Logger;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -75,14 +72,9 @@ public class RelatórioTeste extends javax.swing.JFrame {
         String src = "Comandas.jasper";
         JasperPrint jasperPrint = null;
         try {
-            Map parametros = new HashMap();
-            parametros.put("DataComanda", "25/09/2017");
             jasperPrint = JasperFillManager.fillReport(src, null, conn);
-            
         } catch (JRException ex) {
-            
             System.out.println("Error:" + ex);
-            
         }
         JasperViewer view = new JasperViewer(jasperPrint, false);
         view.setVisible(true);
