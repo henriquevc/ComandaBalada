@@ -99,8 +99,8 @@ public class ComandaDAO {
         return stmt.executeQuery(sql);
     }
     
-    public ArrayList<ComandaRelatorio> ListarComandasPorData (String data) throws SQLException {
-        ArrayList<ComandaRelatorio> lista = new ArrayList();
+    public static ResultSet ListarComandasPorData (String data) throws SQLException {
+        
         stmt = conexao.createStatement();
         sql = "select co.Id, cl.Nome, sum(ip.Valor * ip.Quantidade) ValorTotal "
             + "from comanda co "
@@ -109,12 +109,8 @@ public class ComandaDAO {
             + "where co.Data = '" + data + "' "
             + "group by co.Id, cl.Nome";
         
-        ResultSet rs = stmt.executeQuery(sql);   
-        while (rs.next()){
-            ComandaRelatorio cmdR = new ComandaRelatorio(rs.getInt("Id"), rs.getString("Nome"), rs.getFloat("ValorTotal"));
-            lista.add(cmdR);
-        }
-        return lista;
+        return stmt.executeQuery(sql);   
+        
     }
     
     public static boolean ComandaAbertaCliente (int clienteId) throws SQLException{

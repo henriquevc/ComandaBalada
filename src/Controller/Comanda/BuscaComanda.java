@@ -7,6 +7,7 @@ package Controller.Comanda;
 
 import Model.Comanda;
 import Model.ComandaDAO;
+import Model.ComandaRelatorio;
 import Model.ItemPedido;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,5 +45,21 @@ public class BuscaComanda {
     
     public static boolean ComandaAberta (int clienteId) throws SQLException{
         return ComandaDAO.ComandaAberta(clienteId);
+    }
+    
+    /*
+    public ArrayList<ComandaRelatorio> ListarComandasPorData (String data) throws SQLException {
+        ArrayList<ComandaRelatorio> lista = new ArrayList();
+        ResultSet rs = ComandaDAO.ListarComandasPorData(data);
+        while (rs.next()){
+            ComandaRelatorio cmdR = new ComandaRelatorio(rs.getInt("Id"), rs.getString("Nome"), rs.getFloat("ValorTotal"));
+            lista.add(cmdR);
+        }
+        return lista;
+    }
+    */
+    
+    public static ResultSet ListarComandasPorData (String data) throws SQLException {
+        return ComandaDAO.ListarComandasPorData(data);
     }
 }

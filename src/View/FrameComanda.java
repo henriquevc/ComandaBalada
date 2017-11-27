@@ -34,9 +34,9 @@ public class FrameComanda extends javax.swing.JFrame {
      * @throws java.sql.SQLException
      */
     public FrameComanda() throws SQLException {
+        initComponents();
         this.getContentPane().setBackground(new Color(47, 64, 80));
         this.setLocationRelativeTo(null);
-        initComponents();
     }
     
     @SuppressWarnings("empty-statement")

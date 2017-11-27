@@ -5,6 +5,7 @@
  */
 package View;
 
+import Controller.Comanda.BuscaComanda;
 import Model.ComandaRelatorio;
 import Model.ComandaDAO;
 import java.awt.Color;
@@ -130,9 +131,8 @@ public class FrameRelatorio extends javax.swing.JFrame {
     private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
         // TODO add your handling code here:
         String data = tfData.getText();
-        ComandaDAO acessoComanda = new ComandaDAO();
         try {
-            ArrayList<ComandaRelatorio> listaComandas = acessoComanda.ListarComandasPorData(data);
+            ArrayList<ComandaRelatorio> listaComandas = (ArrayList<ComandaRelatorio>) BuscaComanda.ListarComandasPorData(data);
             preencherTabela(listaComandas);
             if (listaComandas.isEmpty())
                 JOptionPane.showMessageDialog(null, "Não existem comandas nesse dia ou a data foi preenchida errada", "ERRO", 0);
