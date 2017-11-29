@@ -146,4 +146,14 @@ public class FechaComandaDAO {
         
         return texto;
     }
+
+    public static ResultSet RelatorioGerarRecibo(String comandaId) throws SQLException {
+        stmt = conexao.createStatement();
+        sql =   "select ip.Id, p.Nome, ip.Quantidade, p.Valor * ip.Quantidade ValorTotal\n" +
+                "from itemPedido ip\n" +
+                "join produto p on ip.ProdutoId = p.Id\n" +
+                "where comandaId = " + comandaId;
+        
+        return stmt.executeQuery(sql);
+    }
 }

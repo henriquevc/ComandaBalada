@@ -57,6 +57,8 @@ public class FrameCliente extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
 
+        setTitle("Cadastro Cliente");
+
         lblCpf.setForeground(new java.awt.Color(255, 255, 255));
         lblCpf.setText("CPF:");
 

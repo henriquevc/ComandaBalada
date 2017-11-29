@@ -132,4 +132,10 @@ public class ClienteDAO {
         
         return cliente;
     }
+    
+    public static ResultSet Listar () throws SQLException {
+        stmt = conexao.createStatement();
+        sql = "select * from cliente";
+        return stmt.executeQuery(sql);
+    }
 }

@@ -3,9 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Relatorio;
+package View.Relatório;
 
+import Controller.Cliente.BuscaCliente;
 import Controller.Comanda.BuscaComanda;
+import Controller.FechamentoComanda.BuscaFechamentoComanda;
+import Model.Cliente;
+import Model.Comanda;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,12 +27,12 @@ import net.sf.jasperreports.view.JasperViewer;
  *
  * @author Henrique
  */
-public class FrameRelatorioComandasDia extends javax.swing.JFrame {
+public class FrameRelatorioRecibo extends javax.swing.JFrame {
 
     /**
-     * Creates new form RelatórioTeste
+     * Creates new form FrameRelatorioRecibo
      */
-    public FrameRelatorioComandasDia() {
+    public FrameRelatorioRecibo() {
         initComponents();
         this.getContentPane().setBackground(new Color(47, 64, 80));
         this.setLocationRelativeTo(null);
@@ -43,87 +47,81 @@ public class FrameRelatorioComandasDia extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        tfData = new javax.swing.JFormattedTextField();
-        lblDescricao = new javax.swing.JLabel();
+        tfComandaId = new javax.swing.JTextField();
+        btnConsultar = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
-        jButton1.setBackground(new java.awt.Color(0, 150, 136));
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("gerar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        setTitle("Recibo");
+
+        btnConsultar.setBackground(new java.awt.Color(0, 128, 108));
+        btnConsultar.setForeground(new java.awt.Color(255, 255, 255));
+        btnConsultar.setText("Consultar");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnConsultarActionPerformed(evt);
             }
         });
 
-        try {
-            tfData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        tfData.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfDataActionPerformed(evt);
-            }
-        });
-
-        lblDescricao.setForeground(new java.awt.Color(255, 255, 255));
-        lblDescricao.setText("Entre com a data:");
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("ID da Comanda:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblDescricao)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(tfData, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30))))
+                        .addComponent(tfComandaId, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnConsultar)))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(lblDescricao)
+                .addGap(91, 91, 91)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfData, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(145, Short.MAX_VALUE))
+                    .addComponent(tfComandaId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnConsultar))
+                .addContainerGap(166, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        // TODO add your handling code here:
         try {
             // TODO add your handling code here:
-
-            ResultSet rs = BuscaComanda.ListarComandasPorData(tfData.getText());
+            ResultSet rs = BuscaFechamentoComanda.GerarRecibo(tfComandaId.getText()); 
             JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
+
+            Comanda cmd = BuscaComanda.Buscar(Integer.parseInt(tfComandaId.getText()));
+            Cliente cli = BuscaCliente.Buscar(cmd.getClienteId());
+            String src = "Recibo.jasper";
+            
+            //Parametros para o Relatório
             Map parametros = new HashMap();
-            parametros.put("DataI", tfData.getText());
-            String src = "ComandasPorData.jasper";
+            parametros.put("NomeCliente", cli.getNome());
+            parametros.put("CpfCliente", cli.getCpf());
+            parametros.put("TelefoneCliente", cli.getTelefone());
+            parametros.put("ComandaID", tfComandaId.getText());
+            parametros.put("DataComanda", cmd.getData());
+            
             JasperPrint jasperPrint = JasperFillManager.fillReport(src, parametros, jrRS);
             JasperViewer view = new JasperViewer(jasperPrint, false);
             view.setVisible(true);
-        } catch (SQLException | JRException ex) {
+        } catch (JRException ex) {
             Logger.getLogger(FrameRelatorioComandasDia.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FrameRelatorioRecibo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-
-
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void tfDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfDataActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfDataActionPerformed
+    }//GEN-LAST:event_btnConsultarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,30 +140,27 @@ public class FrameRelatorioComandasDia extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrameRelatorioComandasDia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameRelatorioRecibo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrameRelatorioComandasDia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameRelatorioRecibo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrameRelatorioComandasDia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameRelatorioRecibo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrameRelatorioComandasDia.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrameRelatorioRecibo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrameRelatorioComandasDia().setVisible(true);
+                new FrameRelatorioRecibo().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel lblDescricao;
-    private javax.swing.JFormattedTextField tfData;
+    private javax.swing.JButton btnConsultar;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextField tfComandaId;
     // End of variables declaration//GEN-END:variables
 }

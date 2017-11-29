@@ -52,7 +52,7 @@ public class BuscaProduto {
         return nomeProduto;
     }
     
-        public static List<Produto> Listar () throws SQLException {
+    public static List<Produto> Listar () throws SQLException {
         ArrayList<Produto> listProdutos = new ArrayList<>();
         ResultSet rs = ProdutoDAO.Listar();
         while(rs.next()){
@@ -63,5 +63,9 @@ public class BuscaProduto {
             listProdutos.add(p);
         }
         return listProdutos;
+    }
+    
+    public static ResultSet ListarRelatorio () throws SQLException {
+        return ProdutoDAO.Listar();
     }
 }

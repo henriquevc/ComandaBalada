@@ -91,6 +91,8 @@ public class FrameComanda extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         tfValorAcumulado = new javax.swing.JTextField();
 
+        setTitle("Comanda");
+
         lblBuscaComanda.setForeground(new java.awt.Color(255, 255, 255));
         lblBuscaComanda.setText("Buscar por Id:");
 

@@ -49,6 +49,8 @@ public class FrameRegistrarPedido extends javax.swing.JFrame {
         btnRegistrar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
 
+        setTitle("Registrar Pedido");
+
         lblIdComanda.setForeground(new java.awt.Color(255, 255, 255));
         lblIdComanda.setText("ID da Comanda: ");
 

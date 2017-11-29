@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -73,6 +72,7 @@ public class ComandaDAO {
             cmd.setId(rs.getInt("Id"));
             cmd.setClienteId(rs.getInt("ClienteId"));
             cmd.setFechamentoComandaId(rs.getInt("FechamentoComandaId"));
+            cmd.setData(rs.getString("Data"));
         }
         
         return cmd;
@@ -102,12 +102,21 @@ public class ComandaDAO {
     public static ResultSet ListarComandasPorData (String data) throws SQLException {
         
         stmt = conexao.createStatement();
-        sql = "select co.Id, cl.Nome, sum(ip.Valor * ip.Quantidade) ValorTotal "
-            + "from comanda co "
-            + "join cliente cl on cl.Id = co.ClienteId "
-            + "left join itemPedido ip on ip.ComandaId = co.Id "
-            + "where co.Data = '" + data + "' "
-            + "group by co.Id, cl.Nome";
+        if ("".equals(data)){
+            sql = "select co.Id, cl.Nome, co.Data, sum(ip.Valor * ip.Quantidade) ValorTotal "
+                + "from comanda co "
+                + "join cliente cl on cl.Id = co.ClienteId "
+                + "left join itemPedido ip on ip.ComandaId = co.Id "
+                + "group by co.Id, cl.Nome, co.Data";
+        }
+        else {
+            sql = "select co.Id, cl.Nome, sum(ip.Valor * ip.Quantidade) ValorTotal "
+                + "from comanda co "
+                + "join cliente cl on cl.Id = co.ClienteId "
+                + "left join itemPedido ip on ip.ComandaId = co.Id "
+                + "where co.Data = '" + data + "' "
+                + "group by co.Id, cl.Nome";
+        }
         
         return stmt.executeQuery(sql);   
         

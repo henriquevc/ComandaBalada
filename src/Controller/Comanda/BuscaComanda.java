@@ -7,7 +7,6 @@ package Controller.Comanda;
 
 import Model.Comanda;
 import Model.ComandaDAO;
-import Model.ComandaRelatorio;
 import Model.ItemPedido;
 import java.sql.ResultSet;
 import java.sql.SQLException;

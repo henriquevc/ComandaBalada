@@ -5,16 +5,30 @@
  */
 package View;
 
-import Relatorio.FrameRelatorioComandasDia;
+import View.Relatório.FrameRelatorioComandasDia;
+import View.Relatório.FrameRelatorioRecibo;
+import Controller.Cliente.BuscaCliente;
+import Controller.Comanda.BuscaComanda;
+import Controller.Produto.BuscaProduto;
+import Model.AcessaDB;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JRResultSetDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -57,6 +71,7 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
 
@@ -140,13 +155,36 @@ public class FramePrincipal extends javax.swing.JFrame {
         jMenu5.add(jMenuItem2);
 
         jMenuItem7.setText("Clientes");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem7);
 
         jMenuItem5.setText("Produtos");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem5);
 
         jMenuItem6.setText("Produtos Mais Pedidos");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem6);
+
+        jMenuItem10.setText("Recibo");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jMenuItem10);
 
         jMenuBar1.add(jMenu5);
 
@@ -224,6 +262,57 @@ public class FramePrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuItem9ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            ResultSet rs = BuscaCliente.Listar(); 
+            JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
+            String src = "Clientes.jasper";
+            JasperPrint jasperPrint = JasperFillManager.fillReport(src, null, jrRS);
+            JasperViewer view = new JasperViewer(jasperPrint, false);
+            view.setVisible(true);
+        } catch (SQLException | JRException ex) {
+            Logger.getLogger(FrameRelatorioComandasDia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            ResultSet rs = BuscaProduto.ListarRelatorio(); 
+            JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
+            String src = "Produtos.jasper";
+            JasperPrint jasperPrint = JasperFillManager.fillReport(src, null, jrRS);
+            JasperViewer view = new JasperViewer(jasperPrint, false);
+            view.setVisible(true);
+        } catch (SQLException | JRException ex) {
+            Logger.getLogger(FrameRelatorioComandasDia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            //ResultSet rs = BuscaProduto.ListarRelatorio(); 
+            //JRResultSetDataSource jrRS = new JRResultSetDataSource(rs);
+            Connection conn = AcessaDB.getConnection();
+            String src = "RankingProdutos.jasper";
+            JasperPrint jasperPrint = JasperFillManager.fillReport(src, null, conn);
+            JasperViewer view = new JasperViewer(jasperPrint, false);
+            view.setVisible(true);
+        } catch (JRException ex) {
+            Logger.getLogger(FrameRelatorioComandasDia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+        new FrameRelatorioRecibo().setVisible(true);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -273,6 +362,7 @@ public class FramePrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;

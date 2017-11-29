@@ -54,6 +54,8 @@ public class FrameProduto extends javax.swing.JFrame {
         btnLimpar = new javax.swing.JButton();
         btnListar = new javax.swing.JButton();
 
+        setTitle("Produto");
+
         tfBuscar.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 tfBuscarFocusLost(evt);

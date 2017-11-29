@@ -32,4 +32,8 @@ public class BuscaFechamentoComanda {
             
         return lista;
     }
+    
+    public static ResultSet GerarRecibo (String comandaId){
+        return FechaComandaDAO.RelatorioGerarRecibo(comandaId);
+    }
 }
