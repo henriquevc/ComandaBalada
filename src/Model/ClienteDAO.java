@@ -63,8 +63,6 @@ public class ClienteDAO {
                                          + "valoracumulado = " + cliente.getValorAcumulado()
                           + " where id = %d", cliente.getNome(), cliente.getCpf(), cliente.getTelefone(), cliente.getId());
         //converter o float para double (, para .)
-
-        
         if(stmt.executeUpdate(sql) > 0){
             JOptionPane.showMessageDialog(null, "Dados do cliente alterados com sucesso!");
         }
@@ -74,63 +72,34 @@ public class ClienteDAO {
         }
     }
     
-    public static Cliente Buscar (int id) throws SQLException{
+    public static ResultSet Buscar (int id) throws SQLException{
+        
         stmt = conexao.createStatement();
-        
         sql = "select * from cliente where id = " + id;
+        return stmt.executeQuery(sql);
         
-        Cliente cliente = new Cliente();
-        
-        ResultSet rs = stmt.executeQuery(sql);
-        while (rs.next()){
-            cliente.setId(rs.getInt("id"));
-            cliente.setCpf(rs.getString("cpf"));
-            cliente.setNome(rs.getString("nome"));
-            cliente.setTelefone(rs.getString("telefone"));
-            cliente.setValorAcumulado(rs.getFloat("valoracumulado"));
-        }
-        
-        return cliente;
     }
     
-    public static String BuscarNomeCliente (int id) throws SQLException {
+    public static ResultSet BuscarNomeCliente (int id) throws SQLException {
+        
         stmt = conexao.createStatement();
         sql = "select Nome from cliente where id = " + id;
-        ResultSet rs = stmt.executeQuery(sql);
-        String nome = "";
-        while (rs.next()){
-            nome = rs.getString("nome");
-        }
-        return nome;
+        return stmt.executeQuery(sql);
+        
     }
     
     public void Excluir (int id) throws SQLException {
+        
         stmt = conexao.createStatement();
-        
         sql = "delete cliente where id = " + id;
-        
         stmt.executeUpdate(sql);
     }
     
-    public static Cliente BuscaCPF (String cpf) throws SQLException{
+    public static ResultSet BuscarCPF (String cpf) throws SQLException{
+        
         stmt = conexao.createStatement();
-        
         sql = "select * from cliente where cpf = '" + cpf + "'";
-        Cliente cliente = new Cliente();
-        
-        ResultSet rs = stmt.executeQuery(sql);
-        try {
-            while(rs.next()){
-                cliente.setId(rs.getInt("id"));
-                cliente.setNome(rs.getString("nome"));
-                cliente.setTelefone(rs.getString("telefone"));
-                cliente.setValorAcumulado(rs.getFloat("valoracumulado"));
-            }//fim do while
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "CPF não encontrado" + ex.getMessage(), "ERRO", 0);
-        }
-        
-        return cliente;
+        return stmt.executeQuery(sql);
     }
     
     public static ResultSet Listar () throws SQLException {

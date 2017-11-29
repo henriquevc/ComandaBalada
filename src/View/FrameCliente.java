@@ -197,13 +197,11 @@ public class FrameCliente extends javax.swing.JFrame {
 
     private void btnSalvarAbrirComandaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAbrirComandaActionPerformed
         // TODO add your handling code here:
-        
         cliente.setId(Integer.parseInt(tfId.getText()));
         cliente.setNome(tfNome.getText());
         cliente.setCpf(tfCpf.getText());
         cliente.setTelefone(tfTelefone.getText());
         String valoracumulado = tfValorAcumulado.getText().replace(".", "").replace(",", ".");
-
         cliente.setValorAcumulado(Float.parseFloat(valoracumulado));
         try {
             int idCliente = SalvaCliente.Salvar(cliente);
@@ -211,10 +209,7 @@ public class FrameCliente extends javax.swing.JFrame {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "ERRO ao gravar no Banco", "ERRO", 0);
         }
-        
     }//GEN-LAST:event_btnSalvarAbrirComandaActionPerformed
-    
-
     
     public String formatarFloat(String numero){
         float numeroF = Float.parseFloat(numero);
@@ -245,10 +240,8 @@ public class FrameCliente extends javax.swing.JFrame {
             tfTelefone.setText(cliente.getTelefone());
             tfValorAcumulado.setText(formatarFloat(String.valueOf(cliente.getValorAcumulado())).replace(".", ","));
         } catch (SQLException ex) {
-            Logger.getLogger(FrameCliente.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "CPF não encontrado" + ex.getMessage(), "ERRO", 0);
         }
-
-
     }//GEN-LAST:event_tfCpfFocusLost
 
     private void tfValorAcumuladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfValorAcumuladoActionPerformed

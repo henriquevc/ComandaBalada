@@ -7,11 +7,8 @@ package Controller.Cliente;
 
 import Model.Cliente;
 import Model.ClienteDAO;
-import View.FrameCliente;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -20,22 +17,45 @@ import java.util.logging.Logger;
 public class BuscaCliente {
     
     public static Cliente Buscar(int clienteId) throws SQLException{
-        return ClienteDAO.Buscar(clienteId);
-    }
-    
-    public static Cliente BuscaClienteCPF (String cpf) throws SQLException{
         Cliente cliente = new Cliente();
-        try{
-            cliente = ClienteDAO.BuscaCPF(cpf);
-        } catch (SQLException ex) {
-            Logger.getLogger(FrameCliente.class.getName()).log(Level.SEVERE, null, ex);
+        ResultSet rs = ClienteDAO.Buscar(clienteId);
+        
+        while (rs.next()){
+            cliente.setId(rs.getInt("id"));
+            cliente.setCpf(rs.getString("cpf"));
+            cliente.setNome(rs.getString("nome"));
+            cliente.setTelefone(rs.getString("telefone"));
+            cliente.setValorAcumulado(rs.getFloat("valoracumulado"));
         }
         
         return cliente;
     }
     
+    public static Cliente BuscaClienteCPF (String cpf) throws SQLException{
+        
+        ResultSet rs = ClienteDAO.BuscarCPF(cpf);
+        Cliente cliente = new Cliente();
+        
+        while(rs.next()){
+            cliente.setId(rs.getInt("id"));
+            cliente.setNome(rs.getString("nome"));
+            cliente.setTelefone(rs.getString("telefone"));
+            cliente.setValorAcumulado(rs.getFloat("valoracumulado"));
+        }//fim do while
+
+        return cliente;
+    }
+    
     public static String BuscarNome(int clienteId) throws SQLException{
-        return ClienteDAO.BuscarNomeCliente(clienteId);
+        
+        ResultSet rs = ClienteDAO.BuscarNomeCliente(clienteId);
+        String nome = "";
+        
+        while (rs.next()){
+            nome = rs.getString("nome");
+        }
+        
+        return nome;
     }
     
     public static ResultSet Listar () throws SQLException {
