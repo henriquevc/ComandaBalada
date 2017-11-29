@@ -59,23 +59,13 @@ public class ComandaDAO {
         }
     }
     
-    public static Comanda Buscar (int id) throws SQLException {
+    public static ResultSet Buscar (int id) throws SQLException {
+        
         stmt = conexao.createStatement();
-        
         sql = "select * from comanda where id = " + id;
+        return stmt.executeQuery(sql);
         
-        Comanda cmd = new Comanda();
         
-        ResultSet rs = stmt.executeQuery(sql);
-        
-        while(rs.next()) {
-            cmd.setId(rs.getInt("Id"));
-            cmd.setClienteId(rs.getInt("ClienteId"));
-            cmd.setFechamentoComandaId(rs.getInt("FechamentoComandaId"));
-            cmd.setData(rs.getString("Data"));
-        }
-        
-        return cmd;
     }
     
     public void Excluir (int id) throws SQLException{

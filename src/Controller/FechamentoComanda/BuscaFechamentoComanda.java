@@ -33,7 +33,7 @@ public class BuscaFechamentoComanda {
         return lista;
     }
     
-    public static ResultSet GerarRecibo (String comandaId){
+    public static ResultSet GerarRecibo (String comandaId) throws SQLException{
         return FechaComandaDAO.RelatorioGerarRecibo(comandaId);
     }
 }

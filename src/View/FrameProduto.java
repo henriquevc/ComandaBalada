@@ -190,7 +190,7 @@ public class FrameProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
         Produto produto = new Produto();
         produto.setNome(tfNome.getText());
-        produto.setValor(Float.parseFloat(tfValor.getText()));
+        produto.setValor(Float.parseFloat(tfValor.getText().replace(",", ".")));
         
         try {
             IncluiProduto.Incluir(produto);
@@ -230,6 +230,7 @@ public class FrameProduto extends javax.swing.JFrame {
         tfId.setText("");
         tfNome.setText("");
         tfValor.setText("");
+        tfBuscar.setText("");
     }//GEN-LAST:event_btnLimparActionPerformed
 
     private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed

@@ -19,7 +19,15 @@ import java.util.ArrayList;
 public class BuscaComanda {
     
     public static Comanda Buscar (int comandaId) throws SQLException{
-        return ComandaDAO.Buscar(comandaId);
+        Comanda cmd = new Comanda();
+        ResultSet rs = ComandaDAO.Buscar(comandaId);
+        while(rs.next()) {
+            cmd.setId(rs.getInt("Id"));
+            cmd.setClienteId(rs.getInt("ClienteId"));
+            cmd.setFechamentoComandaId(rs.getInt("FechamentoComandaId"));
+            cmd.setData(rs.getString("Data"));
+        }
+        return cmd;
     }
     
     public static ArrayList<ItemPedido> ListarPedidosComanda (int comandaId) throws SQLException{
